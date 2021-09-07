@@ -3,7 +3,59 @@
 {
 	"Version"		"1"
 
-	"move_west"
+	"move_north"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+        "BaseClass" "ability_lua"
+        "ScriptFile" "abilities/move_north"
+		"AbilityBehavior"		        "DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_VECTOR_TARGETING"
+		"AbilityUnitDamageType"		    "DAMAGE_TYPE_NONE"
+        "AbilityTextureName"			"arrow_up"
+        "MaxLevel"						"1"
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+        "AbilityCastRange"              "0"
+        "AbilityCastPoint"				"0.0"
+		// Time
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"0.0"
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"0"
+
+        "precache"
+        {
+            "particle"  "particles/ui_mouseactions/custom_range_finder_cone.vpcf"
+        }
+	}
+    "move_south"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+        "BaseClass" "ability_lua"
+        "ScriptFile" "abilities/move_south"
+		"AbilityBehavior"		        "DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_VECTOR_TARGETING"
+		"AbilityUnitDamageType"		    "DAMAGE_TYPE_NONE"
+        "AbilityTextureName"			"arrow_down"
+        "MaxLevel"						"1"
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+        "AbilityCastRange"              "0"
+        "AbilityCastPoint"				"0.0"
+		// Time
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"0.0"
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"0"
+
+        "precache"
+        {
+            "particle"  "particles/ui_mouseactions/custom_range_finder_cone.vpcf"
+        }
+	}
+    "move_west"
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
@@ -11,7 +63,33 @@
         "ScriptFile" "abilities/move_west"
 		"AbilityBehavior"		        "DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_VECTOR_TARGETING"
 		"AbilityUnitDamageType"		    "DAMAGE_TYPE_NONE"
-        "AbilityTextureName"			"pangolier_swashbuckle"
+        "AbilityTextureName"			"arrow_left"
+        "MaxLevel"						"1"
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+        "AbilityCastRange"              "0"
+        "AbilityCastPoint"				"0.0"
+		// Time
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"0.0"
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"0"
+
+        "precache"
+        {
+            "particle"  "particles/ui_mouseactions/custom_range_finder_cone.vpcf"
+        }
+	}
+    "move_east"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+        "BaseClass" "ability_lua"
+        "ScriptFile" "abilities/move_east"
+		"AbilityBehavior"		        "DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_VECTOR_TARGETING"
+		"AbilityUnitDamageType"		    "DAMAGE_TYPE_NONE"
+        "AbilityTextureName"			"arrow_right"
         "MaxLevel"						"1"
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------

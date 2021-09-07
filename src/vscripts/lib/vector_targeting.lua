@@ -60,7 +60,7 @@ function VectorTarget:UpdateNettable(ability)
 	local vectorData = {
 		startWidth = ability:GetVectorTargetStartRadius(),
 		endWidth = ability:GetVectorTargetEndRadius(),
-		castLength = ability:GetCastRange(),
+		castLength = ability:GetVectorLength(),
         castDistance = ability:GetVectorTargetRange(),
 		dual = ability:IsDualVectorDirection(),
 		ignoreArrow = ability:IgnoreVectorArrowWidth(),

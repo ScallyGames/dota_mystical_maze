@@ -15,6 +15,8 @@ var vectorTargetUnit;
 var vectorStartPosition;
 var vectorDistance = 800;
 var vectorLength = 800;
+let vectorDirectionLock;
+let dynamicLength = false;
 let gridSize = 512;
 let gridShift = 256;
 var currentlyActiveVectorTargetAbility;
@@ -26,7 +28,7 @@ GameUI.SetMouseCallback(function(eventName, arg, arg2, arg3)
 {
 	if(GameUI.GetClickBehaviors() == 3 && currentlyActiveVectorTargetAbility != undefined){
 		const netTable = CustomNetTables.GetTableValue( "vector_targeting", currentlyActiveVectorTargetAbility )
-		OnVectorTargetingStart(netTable.startWidth, netTable.endWidth, netTable.castLength, netTable.castDistance, netTable.ignoreArrow);
+		OnVectorTargetingStart(netTable.startWidth, netTable.endWidth, netTable.castLength, netTable.castDistance, netTable.ignoreArrow, netTable.direction, netTable.dynamicLength);
 		currentlyActiveVectorTargetAbility = undefined;
 	}
 	return CONTINUE_PROCESSING_EVENT;
@@ -55,7 +57,7 @@ function CheckAbilityVectorTargeting(panel){
 		if (panel.BHasClass("is_active")) {
 			currentlyActiveVectorTargetAbility = abilityIndex;
 			if(GameUI.GetClickBehaviors() == 9 ){
-				OnVectorTargetingStart(netTable.startWidth, netTable.endWidth, netTable.castLength, netTable.castDistance, netTable.ignoreArrow);
+				OnVectorTargetingStart(netTable.startWidth, netTable.endWidth, netTable.castLength, netTable.castDistance, netTable.ignoreArrow, netTable.direction, netTable.dynamicLength);
 			}
 		} else {
 			OnVectorTargetingEnd();
@@ -89,7 +91,7 @@ function GetAbilityFromPanel(panel) {
 }
 
 // Start the vector targeting
-function OnVectorTargetingStart(fStartWidth, fEndWidth, fCastLength, fCastDistance, bIgnoreArrow)
+function OnVectorTargetingStart(fStartWidth, fEndWidth, fCastLength, fCastDistance, bIgnoreArrow, vObjectDirectionLock, bDynamicLength)
 {
 	if (vectorTargetParticle) {
 		Particles.DestroyParticleEffect(vectorTargetParticle, true)
@@ -113,8 +115,9 @@ function OnVectorTargetingStart(fStartWidth, fEndWidth, fCastLength, fCastDistan
 	let endWidth = fEndWidth || startWidth;
 	vectorDistance = fCastDistance || 800;
     vectorLength = fCastLength || 800;
+    vectorDirectionLock = vObjectDirectionLock && Vector_fromObject(vObjectDirectionLock);
 	let ignoreArrowWidth = bIgnoreArrow;
-
+    dynamicLength = !!bDynamicLength;
 
 	// redo dota's default particles
 	const abilityName = Abilities.GetAbilityName(currentlyActiveVectorTargetAbility);
@@ -152,7 +155,15 @@ function OnVectorTargetingStart(fStartWidth, fEndWidth, fCastLength, fCastDistan
 
 	//Calculate initial particle CPs
 	const unitPosition = Entities.GetAbsOrigin(mainSelected);
-	const direction = Vector_normalize(Vector_flatten(Vector_sub(vectorStartPosition, unitPosition)));
+	let direction;
+    if(vectorDirectionLock)
+    {
+        direction = vectorDirectionLock;
+    }
+    else
+    {
+        direction = Vector_normalize(Vector_flatten(Vector_sub(vectorStartPosition, unitPosition)));
+    }
 	const newPosition = Vector_add(vectorStartPosition, Vector_mult(direction, vectorLength));
 
 
@@ -193,8 +204,25 @@ function ShowVectorTargetingParticle()
 		const testVec = Vector_flatten(Vector_sub(worldPosition, vectorStartPosition));
 		if (!(testVec[0] == 0 && testVec[1] == 0 && testVec[2] == 0))
 		{
-			let direction = Vector_normalize(Vector_flatten(Vector_sub(worldPosition, vectorStartPosition)));
-            const newPosition = Vector_add(vectorStartPosition, Vector_mult(direction, vectorLength));
+            if(vectorDirectionLock)
+            {
+                direction = vectorDirectionLock;
+            }
+            else
+            {
+                direction = Vector_normalize(Vector_flatten(Vector_sub(worldPosition, vectorStartPosition)));
+            }
+
+            let newPosition;
+            if(dynamicLength)
+            {
+                const projectedLength = Math.max(gridSize, Vector_dot(Vector_sub(worldPosition, vectorStartPosition), direction));
+                newPosition = Vector_add(Vector_flatten(vectorStartPosition), Vector_mult(direction, projectedLength));
+            }
+            else
+            {
+                newPosition = Vector_add(vectorStartPosition, Vector_mult(direction, vectorLength));
+            }
 
             Particles.SetParticleControl(vectorTargetParticle, 2, newPosition);
 		}
@@ -206,10 +234,18 @@ function ShowVectorTargetingParticle()
 }
 
 //Some Vector Functions here:
+function Vector_fromObject(vecObject)
+{
+    return [
+        vecObject.x || 0,
+        vecObject.y || 0,
+        vecObject.z || 0,
+    ];
+}
 function Vector_alignToGrid(vec, gridSize)
 {
-    vec[0] = Math.round((vec[0] + 256) / gridSize) * gridSize - 256;
-    vec[1] = Math.round((vec[1] + 256) / gridSize) * gridSize - 256;
+    vec[0] = Math.round((vec[0] + gridSize / 2) / gridSize) * gridSize - gridSize / 2;
+    vec[1] = Math.round((vec[1] + gridSize / 2) / gridSize) * gridSize - gridSize / 2;
     return vec;
 }
 
@@ -247,4 +283,9 @@ function Vector_flatten(vec)
 function Vector_raiseZ(vec, inc)
 {
 	return [vec[0], vec[1], vec[2] + inc];
+}
+
+function Vector_dot(vec1, vec2)
+{
+    return vec1[0] * vec2[0] + vec1[1] * vec2[1] + vec1[2] * vec2[2];
 }

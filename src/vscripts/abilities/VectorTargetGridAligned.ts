@@ -9,15 +9,15 @@ export class VectorTargetGridAligned extends BaseVectorAbility
     override GetVectorPosition() : Vector
     {
         return Vector(
-            Math.round(this.vectorTargetPosition.x / this.gridSize) * this.gridSize,
-            Math.round(this.vectorTargetPosition.y / this.gridSize) * this.gridSize,
+            Math.round((this.vectorTargetPosition.x + this.gridSize / 2) / this.gridSize) * this.gridSize - this.gridSize / 2,
+            Math.round((this.vectorTargetPosition.y + this.gridSize / 2) / this.gridSize) * this.gridSize - this.gridSize / 2,
             this.vectorTargetPosition.z
         );
     }
 
-    override GetCastRange()
+    override GetVectorLength()
     {
-        return 800;
+        return this.gridSize;
     }
 
     override GetVectorTargetRange()
@@ -28,8 +28,8 @@ export class VectorTargetGridAligned extends BaseVectorAbility
     override GetVector2Position() : Vector
     {
         return Vector(
-            Math.round(this.vectorTargetPosition2.x / this.gridSize) * this.gridSize,
-            Math.round(this.vectorTargetPosition2.y / this.gridSize) * this.gridSize,
+            Math.round((this.vectorTargetPosition2.x + this.gridSize / 2)  / this.gridSize) * this.gridSize - this.gridSize / 2,
+            Math.round((this.vectorTargetPosition2.y + this.gridSize / 2)  / this.gridSize) * this.gridSize - this.gridSize / 2,
             this.vectorTargetPosition2.z
         );
     }

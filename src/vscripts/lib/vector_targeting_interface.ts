@@ -3,6 +3,8 @@ import { BaseAbility } from "./dota_ts_adapter";
 export interface BaseVectorAbility extends BaseAbility {
     vectorTargetPosition:Vector;
     vectorTargetPosition2:Vector;
+    UpdateNettable(ability: BaseVectorAbility):void;
+    GetVectorLength(): number;
 	GetVectorTargetRange():number;
 	GetVectorTargetStartRadius():number;
 	GetVectorTargetEndRadius():number;
