@@ -1,26 +1,33 @@
 import { Hero } from './constants'
+import { RoomDefinition } from './TileDefinition'
 
-export const RoomDefinitions =
-{
-	// tile_01a :
-	// {
-	// 	name:"tile_small_01a",
-	//     exits : {
-    //         north : {
-    //             type : Heroes.BARBARIAN,
-    //         },
-    //         south : {
-    //             type : Heroes.WARRIOR,
-    //         },
-    //         west : {
-    //             type : Heroes.ALCHEMIST,
-    //         },
-    //         east : {
-    //             type : Heroes.ARCHER,
-    //         },
-    //     },
-	// },
-	tile_02 :
+export const RoomDefinitions : RoomDefinition[] =
+[
+	{
+		name:"tile_small_01a",
+	    exits : {
+            north : {
+                type : Hero.BARBARIAN,
+            },
+            south : {
+                type : Hero.WARRIOR,
+            },
+            west : {
+                type : Hero.ALCHEMIST,
+            },
+            east : {
+                type : Hero.ARCHER,
+            },
+        },
+        stairs : [
+            {
+                connections : [
+                    Vector(2, 0),
+                    Vector(3, 1),
+                ],
+            },
+        ],
+	},
 	{
 		name:"tile_small_02",
         exits : {
@@ -28,8 +35,15 @@ export const RoomDefinitions =
                 type : Hero.BARBARIAN,
             },
         },
+        stairs : [
+            {
+                connections : [
+                    Vector(0, 2),
+                    Vector(2, 3),
+                ],
+            },
+        ],
 	},
-	tile_03 :
 	{
 		name:"tile_03",
         exits : {
@@ -41,7 +55,6 @@ export const RoomDefinitions =
             },
         },
 	},
-	tile_04 :
 	{
 		name:"tile_04",
         exits : {
@@ -53,7 +66,6 @@ export const RoomDefinitions =
             },
         },
 	},
-	tile_05 :
 	{
 		name:"tile_05",
         exits : {
@@ -68,7 +80,6 @@ export const RoomDefinitions =
             },
         },
 	},
-	tile_06 :
 	{
 		name:"tile_06",
         exits : {
@@ -143,4 +154,4 @@ export const RoomDefinitions =
     //         },
     //     },
 	// },
-}
+]

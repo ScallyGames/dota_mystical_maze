@@ -1,5 +1,8 @@
 import { reloadable } from "./lib/tstl-utils";
+import { RoomDefinition as TileDefinition } from "./TileDefinition";
 import { RoomDefinitions } from './room_tables';
+import { IsValidTileCoord, TileCoordToWorldCoord } from "./utils";
+import { MapVectorKey } from "./data-structures/MapVectorKey";
 
 declare global {
     interface CDOTAGamerules {
@@ -7,22 +10,27 @@ declare global {
     }
 }
 
+
 @reloadable
 export class GameMode {
 
-    private rooms: string[] = [];
+    private TileStack: TileDefinition[] = [];
+    public SpawnedTiles: MapVectorKey<TileDefinition> = new MapVectorKey<TileDefinition>()
 
-    public static Precache(this: void, context: CScriptPrecacheContext) {
+    public static Precache(this: void, context: CScriptPrecacheContext)
+    {
         PrecacheResource("particle", "particles/units/heroes/hero_meepo/meepo_earthbind_projectile_fx.vpcf", context);
         PrecacheResource("soundfile", "soundevents/game_sounds_heroes/game_sounds_meepo.vsndevts", context);
     }
 
-    public static Activate(this: void) {
+    public static Activate(this: void)
+    {
         // When the addon activates, create a new instance of this GameMode class.
         GameRules.Addon = new GameMode();
     }
 
-    constructor() {
+    constructor()
+    {
         this.configure();
 
         // Register event listeners for dota engine events
@@ -46,15 +54,14 @@ export class GameMode {
 
     private GetValidTeamPlayers()
     {
-        let out : (CDOTAPlayer | undefined)[] = [];
+        let out: (CDOTAPlayer | undefined)[] = [];
         for(let i = 0; i < DOTA_MAX_PLAYERS; i++)
         {
             if (PlayerResource.IsValidTeamPlayer(i))
             {
                 out[i] = PlayerResource.GetPlayer(i);
             }
-            else
-            {
+            else {
                 out[i] = undefined;
             }
         }
@@ -81,43 +88,36 @@ export class GameMode {
 
     private initilaizeRooms()
     {
-        this.rooms = Object.keys(RoomDefinitions);
+        this.TileStack = RoomDefinitions;
 
-        this.ShuffleListInPlace(this.rooms);
+        let startingRoom = this.TileStack.shift();
+
+
+        this.ShuffleListInPlace(this.TileStack);
+
+        if (startingRoom)
+        {
+            this.TileStack.push(startingRoom);
+
+        }
+
     }
 
-
-    private isValidTileCoord(x : number, y : number)
-    {
-
-        const size = 3;
-        const absX = math.abs(x);
-        const absY = math.abs(y);
-        const isCorner = (absX + absY) == (size * 2);
-        return absX <= 3 && absY <= 3 && !isCorner;
-    }
-
-    private tileCoordToWorldCoord(x : number, y : number)
-    {
-        return Vector(x * 2048 + y * 512, y * 2048 - x * 512)
-    }
-
-    public ShuffleListInPlace<T>( list : T[], hRandomStream? : { RandomInt(from: number, to: number) : number })
+    public ShuffleListInPlace<T>(list: T[], hRandomStream?: { RandomInt(from: number, to: number): number })
     {
         let count = list.length
-        for(let i = 0; i < count; i++)
+        for (let i = 0; i < count; i++)
         {
             let j = 0
             if (!hRandomStream)
             {
-                j = RandomInt( 0, list.length - 1 )
+                j = RandomInt(0, list.length - 1)
             }
-            else
-            {
-                j = hRandomStream.RandomInt( 0, list.length - 1 )
+            else {
+                j = hRandomStream.RandomInt(0, list.length - 1)
             }
 
-            [list[i] , list[j]] = [list[j] , list[i]];
+            [list[i], list[j]] = [list[j], list[i]];
         }
     }
 
@@ -126,15 +126,19 @@ export class GameMode {
         const state = GameRules.State_Get();
 
         // // Add 4 bots to lobby in tools
-        // if (IsInToolsMode() && state == GameState.CUSTOM_GAME_SETUP) {
-        //     for (let i = 0; i < 4; i++) {
+        // if (IsInToolsMode() && state == GameState.CUSTOM_GAME_SETUP)
+        // {
+        //     for (let i = 0; i < 4; i++)
+        //     {
         //         Tutorial.AddBot("npc_dota_hero_lina", "", "", false);
         //     }
         // }
 
-        // if (state === GameState.CUSTOM_GAME_SETUP) {
+        // if (state === GameState.CUSTOM_GAME_SETUP)
+        // {
         //     // Automatically skip setup in tools
-        //     if (IsInToolsMode()) {
+        //     if (IsInToolsMode())
+        //     {
         //         Timers.CreateTimer(3, () => {
         //             GameRules.FinishCustomGameSetup();
         //         });
@@ -142,7 +146,8 @@ export class GameMode {
         // }
 
         // Start game once pregame hits
-        if (state === GameState.PRE_GAME) {
+        if (state === GameState.PRE_GAME)
+        {
             Timers.CreateTimer(0.2, () => this.StartGame());
         }
 
@@ -150,7 +155,7 @@ export class GameMode {
         {
             for (let player of this.GetValidTeamPlayers())
             {
-                if(player)
+                if (player)
                 {
                     player.MakeRandomHeroSelection()
                 }
@@ -158,31 +163,32 @@ export class GameMode {
         }
     }
 
-    private StartGame(): void
-    {
+    private StartGame(): void {
         if (IsServer())
         {
-            let mapName : string;
+            let tileDefinition: TileDefinition;
 
-            if(this.rooms.length > 0)
+            if (this.TileStack.length > 0)
             {
-                mapName = this.rooms.pop()!;
+                tileDefinition = this.TileStack.pop()!;
 
                 for (let x = -3; x <= 3; x++)
                 {
                     for (let y = -3; y <= 3; y++)
                     {
-                        if (x == 0 && y == 0) continue;
-                        if(!this.isValidTileCoord(x, y)) continue;
+                        // if (x == 0 && y == 0) continue;
+                        if (!IsValidTileCoord(x, y)) continue;
+
+                        this.SpawnedTiles.set(Vector(x, y), tileDefinition);
 
                         DOTA_SpawnMapAtPosition(
-                            'tile_small_01a', // mapName,
-                            this.tileCoordToWorldCoord(x, y),
+                            tileDefinition.name,
+                            TileCoordToWorldCoord(x, y),
                             false,
-                            () => {},
-                            () => {},
+                            () => { },
+                            () => { },
                             this
-                        );
+                        )
                     }
                 }
             }
@@ -190,27 +196,27 @@ export class GameMode {
         }
     }
 
-    private StartGameAfterFirstTile() : void
+    private StartGameAfterFirstTile(): void
     {
         print("Game starting!");
-
         const spawnPositions = [
-            Vector(0+256, 0+256, 128),
-            Vector(0+256, 0-256, 128),
-            Vector(0-256, 0+256, 128),
-            Vector(0-256, 0-256, 128),
+            Vector(0 + 256, 0 + 256, 128),
+            Vector(0 + 256, 0 - 256, 128),
+            Vector(0 - 256, 0 + 256, 128),
+            Vector(0 - 256, 0 - 256, 128),
         ];
 
         this.ShuffleListInPlace(spawnPositions);
 
-        const warriorHero = CreateUnitByNameAsync("npc_dota_hero_juggernaut", spawnPositions.pop()!, false, undefined, undefined, DotaTeam.NOTEAM, () => {})
-        const barbarianHero = CreateUnitByNameAsync("npc_dota_hero_axe", spawnPositions.pop()!, false, undefined, undefined, DotaTeam.NOTEAM, () => {})
-        const archerHero = CreateUnitByNameAsync("npc_dota_hero_windrunner", spawnPositions.pop()!, false, undefined, undefined, DotaTeam.NOTEAM, () => {})
-        const alchemistHero = CreateUnitByNameAsync("npc_dota_hero_storm_spirit", spawnPositions.pop()!, false, undefined, undefined, DotaTeam.NOTEAM, () => {})
+        const warriorHero = CreateUnitByNameAsync("npc_dota_hero_juggernaut", spawnPositions.pop()!, false, undefined, undefined, DotaTeam.NOTEAM, () => { })
+        const barbarianHero = CreateUnitByNameAsync("npc_dota_hero_axe", spawnPositions.pop()!, false, undefined, undefined, DotaTeam.NOTEAM, () => { })
+        const archerHero = CreateUnitByNameAsync("npc_dota_hero_windrunner", spawnPositions.pop()!, false, undefined, undefined, DotaTeam.NOTEAM, () => { })
+        const alchemistHero = CreateUnitByNameAsync("npc_dota_hero_storm_spirit", spawnPositions.pop()!, false, undefined, undefined, DotaTeam.NOTEAM, () => { })
     }
 
     // Called on script_reload
-    public Reload() {
+    public Reload()
+    {
         print("Script reloaded!");
     }
 
