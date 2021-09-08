@@ -18,7 +18,6 @@ var vectorLength = 800;
 let vectorDirectionLock;
 let dynamicLength = false;
 let gridSize = 512;
-let gridShift = 256;
 var currentlyActiveVectorTargetAbility;
 
 const defaultAbilities = ["pangolier_swashbuckle", "clinkz_burning_army", "dark_seer_wall_of_replica", "void_spirit_aether_remnant"];
