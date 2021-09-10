@@ -83,6 +83,9 @@ export class GameMode {
         GameRules.GetGameModeEntity().SetFogOfWarDisabled(true);
         GameRules.GetGameModeEntity().SetUnseenFogOfWarEnabled(false);
 
+        GameRules.GetGameModeEntity().SetCameraDistanceOverride(2048);
+        GameRules.GetGameModeEntity().SetCameraZRange(10, 8192);
+
         this.initilaizeRooms();
     }
 
