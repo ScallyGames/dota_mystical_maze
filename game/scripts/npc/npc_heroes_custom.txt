@@ -198,4 +198,32 @@
 		//Inventory
 		"HasInventory"		"0"
 	}
+	"character_warrior"
+	{
+		"override_hero"				"npc_dota_hero_juggernaut"
+
+        "MovementSpeed"		"2048"
+		"MovementTurnRate"		"100"
+    }
+    "character_barbarian"
+    {
+        "override_hero"             "npc_dota_hero_axe"
+
+        "MovementSpeed"		"2048"
+		"MovementTurnRate"		"100"
+    }
+    "character_archer"
+    {
+        "override_hero"             "npc_dota_hero_windrunner"
+
+        "MovementSpeed"		"2048"
+		"MovementTurnRate"		"100"
+    }
+    "character_alchemist"
+    {
+        "override_hero"             "npc_dota_hero_storm_spirit"
+
+        "MovementSpeed"		"2048"
+		"MovementTurnRate"		"100"
+    }
 }

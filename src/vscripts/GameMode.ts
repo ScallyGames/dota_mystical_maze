@@ -4,6 +4,7 @@ import { RoomDefinitions } from './room_tables';
 import { IsValidTileCoord, RotateByCardinalDirection, TileCoordToWorldCoord } from "./utils";
 import { MapVectorKey } from "./data-structures/MapVectorKey";
 import { TileInstance } from "./TileInstance";
+import { modifier_unlock_ms_cap } from "./modifiers/modifier_unlock_ms_cap";
 
 declare global {
     interface CDOTAGamerules {
@@ -263,10 +264,18 @@ export class GameMode {
 
         this.ShuffleListInPlace(spawnPositions);
 
-        const warriorHero = CreateUnitByNameAsync("npc_dota_hero_juggernaut", spawnPositions.pop()!, false, undefined, undefined, DotaTeam.NOTEAM, () => { })
-        const barbarianHero = CreateUnitByNameAsync("npc_dota_hero_axe", spawnPositions.pop()!, false, undefined, undefined, DotaTeam.NOTEAM, () => { })
-        const archerHero = CreateUnitByNameAsync("npc_dota_hero_windrunner", spawnPositions.pop()!, false, undefined, undefined, DotaTeam.NOTEAM, () => { })
-        const alchemistHero = CreateUnitByNameAsync("npc_dota_hero_storm_spirit", spawnPositions.pop()!, false, undefined, undefined, DotaTeam.NOTEAM, () => { })
+        const warriorHero = CreateUnitByNameAsync("npc_dota_hero_juggernaut", spawnPositions.pop()!, false, undefined, undefined, DotaTeam.NOTEAM, (x) => {
+            x.AddNewModifier(x, undefined, modifier_unlock_ms_cap.name, {})
+        })
+        const barbarianHero = CreateUnitByNameAsync("npc_dota_hero_axe", spawnPositions.pop()!, false, undefined, undefined, DotaTeam.NOTEAM, (x) => {
+            x.AddNewModifier(x, undefined, modifier_unlock_ms_cap.name, {})
+        })
+        const archerHero = CreateUnitByNameAsync("npc_dota_hero_windrunner", spawnPositions.pop()!, false, undefined, undefined, DotaTeam.NOTEAM, (x) => {
+            x.AddNewModifier(x, undefined, modifier_unlock_ms_cap.name, {})
+        })
+        const alchemistHero = CreateUnitByNameAsync("npc_dota_hero_storm_spirit", spawnPositions.pop()!, false, undefined, undefined, DotaTeam.NOTEAM, (x) => {
+            x.AddNewModifier(x, undefined, modifier_unlock_ms_cap.name, {})
+        })
     }
 
     // Called on script_reload
