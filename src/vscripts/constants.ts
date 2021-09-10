@@ -8,3 +8,11 @@ export enum Hero
     ALCHEMIST,
     ARCHER,
 }
+
+export const HeroCharacters =
+{
+    [Hero.BARBARIAN]: 'npc_dota_hero_axe',
+    [Hero.WARRIOR]: 'npc_dota_hero_juggernaut',
+    [Hero.ALCHEMIST]: 'npc_dota_hero_storm_spirit',
+    [Hero.ARCHER]: 'npc_dota_hero_windrunner',
+}

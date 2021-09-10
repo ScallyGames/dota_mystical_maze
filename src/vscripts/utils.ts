@@ -1,4 +1,5 @@
 import { TileSize } from './constants';
+import { CardinalDirection } from './TileDefinition';
 
 const TileToWorldMatrix = [
     [+1 * TileSize,         +1/4 * TileSize],
@@ -47,6 +48,65 @@ export function AlignToGrid(x : number, gridSize : number)
     return Math.round((x + gridSize / 2) / gridSize) * gridSize - gridSize / 2;
 }
 
+export function RotateByCardinalDirection(position : Vector, direction : CardinalDirection)
+{
+    const coordinateSystemTranslationMatrix =
+    [
+        [1, 0, 1.5],
+        [0, 1, 1.5],
+        [0, 0, 1],
+    ];
+
+    const inverseCoordinateSystemTranslationMatrix =
+    [
+        [1, 0, -1.5],
+        [0, 1, -1.5],
+        [0, 0, 1],
+    ];
+
+    const transformationMatrices = {
+        north: [
+            [1, 0],
+            [0, 1],
+        ],
+        south: [
+            [-1, 0],
+            [0, -1],
+        ],
+        west: [
+            [0, -1],
+            [+1, 0],
+        ],
+        east: [
+            [0, +1],
+            [-1, 0],
+        ],
+    };
+
+    position.z = 1;
+    let inOrigin = MultiplyMatrixWithVectorAffine(position, inverseCoordinateSystemTranslationMatrix);
+    let rotatedInOrigin = MultiplyMatrixWithVectorLinear(inOrigin, transformationMatrices[direction]);
+    let rotatedInOriginalSystem = MultiplyMatrixWithVectorAffine(rotatedInOrigin, coordinateSystemTranslationMatrix);
+    return rotatedInOriginalSystem;
+}
+
+export function MultiplyMatrixWithVectorLinear(vector : Vector, matrix : number[][])
+{
+    return Vector(
+        vector.x * matrix[0][0] + vector.y * matrix[0][1],
+        vector.x * matrix[1][0] + vector.y * matrix[1][1],
+        vector.z
+    );
+}
+
+export function MultiplyMatrixWithVectorAffine(vector : Vector, matrix : number[][])
+{
+    return Vector(
+        vector.x * matrix[0][0] + vector.y * matrix[0][1] + vector.z * matrix[0][2],
+        vector.x * matrix[1][0] + vector.y * matrix[1][1] + vector.z * matrix[1][2],
+        vector.x * matrix[2][0] + vector.y * matrix[2][1] + vector.z * matrix[2][2],
+    );
+}
 
 export function PrintTable( table: any, indent? : string )
 {

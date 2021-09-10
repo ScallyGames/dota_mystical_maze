@@ -1,8 +1,9 @@
 import { reloadable } from "./lib/tstl-utils";
-import { RoomDefinition as TileDefinition } from "./TileDefinition";
+import { CardinalDirection, TileDefinition } from "./TileDefinition";
 import { RoomDefinitions } from './room_tables';
-import { IsValidTileCoord, TileCoordToWorldCoord } from "./utils";
+import { IsValidTileCoord, RotateByCardinalDirection, TileCoordToWorldCoord } from "./utils";
 import { MapVectorKey } from "./data-structures/MapVectorKey";
+import { TileInstance } from "./TileInstance";
 
 declare global {
     interface CDOTAGamerules {
@@ -10,12 +11,11 @@ declare global {
     }
 }
 
-
 @reloadable
 export class GameMode {
 
     private TileStack: TileDefinition[] = [];
-    public SpawnedTiles: MapVectorKey<TileDefinition> = new MapVectorKey<TileDefinition>()
+    public SpawnedTiles: MapVectorKey<TileInstance> = new MapVectorKey<TileInstance>()
 
     public static Precache(this: void, context: CScriptPrecacheContext)
     {
@@ -103,7 +103,12 @@ export class GameMode {
 
     }
 
-    public ShuffleListInPlace<T>(list: T[], hRandomStream?: { RandomInt(from: number, to: number): number })
+    public GetNextTile()
+    {
+        return this.TileStack.pop();
+    }
+
+    public ShuffleListInPlace<T>( list : T[], hRandomStream? : { RandomInt(from: number, to: number) : number })
     {
         let count = list.length
         for (let i = 0; i < count; i++)
@@ -163,37 +168,84 @@ export class GameMode {
         }
     }
 
-    private StartGame(): void {
+    private StartGame(): void
+    {
         if (IsServer())
         {
-            let tileDefinition: TileDefinition;
-
-            if (this.TileStack.length > 0)
+            if(this.TileStack.length > 0)
             {
-                tileDefinition = this.TileStack.pop()!;
-
-                for (let x = -3; x <= 3; x++)
+                this.SpawnNextTile(0, 0, "north", () =>
                 {
-                    for (let y = -3; y <= 3; y++)
-                    {
-                        // if (x == 0 && y == 0) continue;
-                        if (!IsValidTileCoord(x, y)) continue;
-
-                        this.SpawnedTiles.set(Vector(x, y), tileDefinition);
-
-                        DOTA_SpawnMapAtPosition(
-                            tileDefinition.name,
-                            TileCoordToWorldCoord(x, y),
-                            false,
-                            () => { },
-                            () => { },
-                            this
-                        )
-                    }
-                }
+                    this.StartGameAfterFirstTile();
+                });
             }
-            this.StartGameAfterFirstTile();
         }
+    }
+
+    public SpawnNextTile(x : number, y : number, direction : CardinalDirection, callback = () => {}) : void
+    {
+        const tileDefinition = this.TileStack.pop();
+
+        if(!tileDefinition) return;
+
+        let tileInstance = new TileInstance();
+
+        tileInstance.name = tileDefinition.name;
+        tileInstance.exits = tileDefinition.exits;
+        tileInstance.stairs = tileDefinition.stairs;
+        tileInstance.direction = direction;
+        switch(direction)
+        {
+            case "east":
+                {
+                    let prevNorth = tileInstance.exits.north;
+                    tileInstance.exits.north = tileInstance.exits.west;
+                    tileInstance.exits.west = tileInstance.exits.south;
+                    tileInstance.exits.south = tileInstance.exits.east;
+                    tileInstance.exits.east = prevNorth;
+                }
+                break;
+            case "south":
+                {
+                    let prevNorth = tileInstance.exits.north;
+                    tileInstance.exits.north = tileInstance.exits.south;
+                    tileInstance.exits.south = prevNorth;
+                    let prevWest = tileInstance.exits.west;
+                    tileInstance.exits.west = tileInstance.exits.east;
+                    tileInstance.exits.east = prevWest;
+                }
+                break;
+            case "west":
+                {
+                    let prevNorth = tileInstance.exits.north;
+                    tileInstance.exits.north = tileInstance.exits.east;
+                    tileInstance.exits.east = tileInstance.exits.south;
+                    tileInstance.exits.south = tileInstance.exits.west;
+                    tileInstance.exits.west = prevNorth;
+                }
+                break;
+        }
+        if(tileInstance.stairs)
+        {
+            tileInstance.stairs = tileInstance.stairs.map(x =>
+            {
+                return {
+                    connections: x.connections.map(p => RotateByCardinalDirection(p, direction))
+                }
+            });
+        }
+
+        tileInstance.spawnGroupHandle = DOTA_SpawnMapAtPosition(
+            tileDefinition.name + "_" + direction,
+            TileCoordToWorldCoord(x, y),
+            false,
+            () => {},
+            () => {
+                callback();
+            },
+            this
+        )
+        this.SpawnedTiles.set(Vector(x, y), tileInstance);
     }
 
     private StartGameAfterFirstTile(): void

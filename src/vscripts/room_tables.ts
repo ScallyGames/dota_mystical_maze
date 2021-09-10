@@ -1,7 +1,7 @@
 import { Hero } from './constants'
-import { RoomDefinition } from './TileDefinition'
+import { TileDefinition } from './TileDefinition'
 
-export const RoomDefinitions : RoomDefinition[] =
+export const RoomDefinitions : TileDefinition[] =
 [
 	{
 		name:"tile_small_01a",
@@ -45,7 +45,7 @@ export const RoomDefinitions : RoomDefinition[] =
         ],
 	},
 	{
-		name:"tile_03",
+		name:"tile_small_03",
         exits : {
             west : {
                 type : Hero.ALCHEMIST,
@@ -56,7 +56,7 @@ export const RoomDefinitions : RoomDefinition[] =
         },
 	},
 	{
-		name:"tile_04",
+		name:"tile_small_04",
         exits : {
             north : {
                 type : Hero.ALCHEMIST,
@@ -67,7 +67,7 @@ export const RoomDefinitions : RoomDefinition[] =
         },
 	},
 	{
-		name:"tile_05",
+		name:"tile_small_05",
         exits : {
             north : {
                 type : Hero.BARBARIAN,
@@ -81,7 +81,7 @@ export const RoomDefinitions : RoomDefinition[] =
         },
 	},
 	{
-		name:"tile_06",
+		name:"tile_small_06",
         exits : {
             north : {
                 type : Hero.ARCHER,

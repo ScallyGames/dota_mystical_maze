@@ -1,6 +1,6 @@
 import { Hero } from "./constants";
 
-export class RoomDefinition
+export class TileDefinition
 {
     name: string;
     exits: {
@@ -21,3 +21,5 @@ export class StairDefinition
 {
     connections: Vector[];
 }
+
+export type CardinalDirection = "north" | "south" | "east" | "west";

@@ -3,6 +3,29 @@
 {
 	"Version"		"1"
 
+    "explore"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+        "BaseClass" "ability_lua"
+        "ScriptFile" "abilities/explore"
+		"AbilityBehavior"		        "DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO"
+		"AbilityUnitDamageType"		    "DAMAGE_TYPE_NONE"
+        "AbilityTextureName"			"search"
+        "MaxLevel"						"1"
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+        "AbilityCastRange"              "0"
+        "AbilityCastPoint"				"0.0"
+		// Time
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"0.0"
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"0"
+	}
     "traverse_stairs"
 	{
 		// General
