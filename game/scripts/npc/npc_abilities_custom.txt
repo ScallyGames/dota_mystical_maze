@@ -3,6 +3,27 @@
 {
 	"Version"		"1"
 
+    "steal_weapons"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+        "BaseClass" "ability_lua"
+        "ScriptFile" "abilities/steal_weapons"
+		"AbilityBehavior"		        "DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+		"AbilityUnitDamageType"		    "DAMAGE_TYPE_NONE"
+        "AbilityTextureName"			"steal"
+        "MaxLevel"						"1"
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+        "AbilityCastRange"              "0"
+        "AbilityCastPoint"				"0.0"
+		// Time
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"0.0"
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"0"
+	}
     "teleport_to_portal"
 	{
 		// General

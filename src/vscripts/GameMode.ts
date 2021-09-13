@@ -15,7 +15,12 @@ declare global {
 
 @reloadable
 export class GameMode {
-
+    public CharactersOnShop = {
+        'warrior': false,
+        'barbarian': false,
+        'archer': false,
+        'alchemist': false,
+    };
     private TileStack: TileDefinition[] = [];
     public SpawnedTiles: MapVectorKey<TileInstance> = new MapVectorKey<TileInstance>()
 

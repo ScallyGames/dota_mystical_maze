@@ -17,6 +17,14 @@ export const HeroStringToHeroEnum =
     'archer': Hero.ARCHER,
 }
 
+export const HeroEnumToHeroString =
+{
+    [Hero.BARBARIAN]: 'barbarian',
+    [Hero.WARRIOR]: 'warrior',
+    [Hero.ALCHEMIST]: 'alchemist',
+    [Hero.ARCHER]: 'archer',
+}
+
 export type HeroString = 'barbarian' | 'warrior' | 'alchemist' | 'archer';
 
 export const HeroCharacters =
