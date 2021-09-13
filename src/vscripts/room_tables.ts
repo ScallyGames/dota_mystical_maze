@@ -91,36 +91,41 @@ export const RoomDefinitions : TileDefinition[] =
             },
         },
 	},
-	// tile_07 :
-	// {
-	// 	name:"tile_07",
-    //     exits : {
-    //         east : {
-    //             type : Heroes.ALCHEMIST,
-    //         },
-    //     },
-	// },
-	// tile_08 :
-	// {
-	// 	name:"tile_08",
-    //     exits : {
-    //         west : {
-    //             type : Heroes.BARBARIAN,
-    //         },
-    //         east : {
-    //             type : Heroes.ALCHEMIST,
-    //         },
-    //     },
-	// },
-	// tile_09 :
-	// {
-	// 	name:"tile_09",
-    //     exits : {
-    //         east : {
-    //             type : Heroes.WARRIOR,
-    //         },
-    //     },
-	// },
+	{
+		name:"tile_small_07",
+        exits : {
+            east : {
+                type : Hero.ALCHEMIST,
+            },
+        },
+        stairs : [
+            {
+                connections : [
+                    Vector(1, 0),
+                    Vector(2, 2),
+                ],
+            },
+        ],
+	},
+	{
+		name:"tile_small_08",
+        exits : {
+            west : {
+                type : Hero.BARBARIAN,
+            },
+            east : {
+                type : Hero.ALCHEMIST,
+            },
+        },
+	},
+	{
+		name:"tile_small_09",
+        exits : {
+            east : {
+                type : Hero.WARRIOR,
+            },
+        },
+	},
 	// tile_10 :
 	// {
 	// 	name:"tile_10",

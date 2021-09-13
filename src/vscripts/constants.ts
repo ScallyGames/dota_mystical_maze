@@ -23,6 +23,6 @@ export const HeroCharacters =
 {
     [Hero.BARBARIAN]: 'npc_dota_hero_axe',
     [Hero.WARRIOR]: 'npc_dota_hero_juggernaut',
-    [Hero.ALCHEMIST]: 'npc_dota_hero_storm_spirit',
+    [Hero.ALCHEMIST]: 'npc_dota_hero_crystal_maiden',
     [Hero.ARCHER]: 'npc_dota_hero_windrunner',
 }
