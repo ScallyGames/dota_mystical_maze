@@ -80,6 +80,10 @@ export class explore extends BaseAbility
                 break;
         }
 
+
+        const tileInTargetSpot = gameMode.SpawnedTiles.get(spawnIndex);
+        if(tileInTargetSpot) return;
+
         gameMode.SpawnNextTile(spawnIndex.x, spawnIndex.y, direction);
     }
 }
