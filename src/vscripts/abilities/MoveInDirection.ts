@@ -41,12 +41,7 @@ export class MoveInDirection extends VectorTargetDirectionAligned
         let pathLength = GridNav.FindPathLength(from, to);
         let isDirectPath = Math.abs(pathLength - directLength) < 15
 
-        if (!isDirectPath)
-        {
-            print(pathLength);
-            print(directLength);
-            return;
-        }
+        if (!isDirectPath) return;
 
         (foundEntity as CDOTA_BaseNPC).SetInitialGoalPosition(to);
         (foundEntity as CDOTA_BaseNPC).MoveToPosition(to);
