@@ -3,9 +3,12 @@ import { registerEntityFunction } from "./lib/dota_ts_adapter";
 
 function SetCharacterOnShop(hero: HeroString, val: boolean)
 {
+    if(GameRules.Addon.DidSteal) return;
+
     GameRules.Addon.CharactersOnShop![hero] = val;
 
     let allOnShop = Object.keys(GameRules.Addon.CharactersOnShop!).every(x => GameRules.Addon.CharactersOnShop![x as HeroString]);
+
     for(let i = 0; i < DOTA_MAX_PLAYERS; i++)
     {
         let player = PlayerResource.GetPlayer(i as PlayerID);

@@ -1,11 +1,11 @@
 import { reloadable } from "./lib/tstl-utils";
 import { CardinalDirection, TileDefinition } from "./TileDefinition";
 import { RoomDefinitions } from './room_tables';
-import { IsValidTileCoord, RotateByCardinalDirection, TileCoordToWorldCoord } from "./utils";
+import { RotateByCardinalDirection, TileCoordToWorldCoord } from "./utils";
 import { MapVectorKey } from "./data-structures/MapVectorKey";
 import { TileInstance } from "./TileInstance";
 import { modifier_unlock_ms_cap } from "./modifiers/modifier_unlock_ms_cap";
-import { Hero, HeroCharacters } from "./constants";
+import { Hero, HeroCharacters, HeroEnumToHeroString, HeroTargetWeapons, HeroWeapons } from "./constants";
 
 declare global {
     interface CDOTAGamerules {
@@ -15,6 +15,7 @@ declare global {
 
 @reloadable
 export class GameMode {
+    public DidSteal = false;
     public CharactersOnShop = {
         'warrior': false,
         'barbarian': false,
@@ -24,10 +25,11 @@ export class GameMode {
     private TileStack: TileDefinition[] = [];
     public SpawnedTiles: MapVectorKey<TileInstance> = new MapVectorKey<TileInstance>()
 
-    public static Precache(this: void, context: CScriptPrecacheContext)
-    {
-        PrecacheResource("particle", "particles/units/heroes/hero_meepo/meepo_earthbind_projectile_fx.vpcf", context);
-        PrecacheResource("soundfile", "soundevents/game_sounds_heroes/game_sounds_meepo.vsndevts", context);
+    public static Precache(this: void, context: CScriptPrecacheContext) {
+        PrecacheModel(HeroTargetWeapons[Hero.ALCHEMIST], context);
+        PrecacheModel(HeroTargetWeapons[Hero.ARCHER], context);
+        PrecacheModel(HeroTargetWeapons[Hero.BARBARIAN], context);
+        PrecacheModel(HeroTargetWeapons[Hero.WARRIOR], context);
     }
 
     public static Activate(this: void)
@@ -270,18 +272,22 @@ export class GameMode {
 
         this.ShuffleListInPlace(spawnPositions);
 
-        const warriorHero = CreateUnitByNameAsync(HeroCharacters[Hero.WARRIOR], spawnPositions.pop()!, false, undefined, undefined, DotaTeam.NOTEAM, (x) => {
-            x.AddNewModifier(x, undefined, modifier_unlock_ms_cap.name, {})
-        })
-        const barbarianHero = CreateUnitByNameAsync(HeroCharacters[Hero.BARBARIAN], spawnPositions.pop()!, false, undefined, undefined, DotaTeam.NOTEAM, (x) => {
-            x.AddNewModifier(x, undefined, modifier_unlock_ms_cap.name, {})
-        })
-        const archerHero = CreateUnitByNameAsync(HeroCharacters[Hero.ARCHER], spawnPositions.pop()!, false, undefined, undefined, DotaTeam.NOTEAM, (x) => {
-            x.AddNewModifier(x, undefined, modifier_unlock_ms_cap.name, {})
-        })
-        const alchemistHero = CreateUnitByNameAsync(HeroCharacters[Hero.ALCHEMIST], spawnPositions.pop()!, false, undefined, undefined, DotaTeam.NOTEAM, (x) => {
-            x.AddNewModifier(x, undefined, modifier_unlock_ms_cap.name, {})
-        })
+        for(let hero in Hero)
+        {
+            let heroIndex = Number(hero) as Hero;
+            if(!isNaN(heroIndex))
+            {
+                CreateUnitByNameAsync(HeroCharacters[heroIndex], spawnPositions.pop()!, false, undefined, undefined, DotaTeam.NOTEAM, (x) => {
+                    x.SetEntityName(HeroEnumToHeroString[heroIndex]);
+                    x.SetAbsAngles(0, 270, 0);
+                    x.SetUnitName(HeroEnumToHeroString[heroIndex]);
+                    x.AddNewModifier(x, undefined, modifier_unlock_ms_cap.name, {});
+                    let weaponModel = Entities.FindByModel(undefined, HeroWeapons[heroIndex]) as CBaseModelEntity;
+
+                    weaponModel?.Destroy();
+                });
+            }
+        }
     }
 
     // Called on script_reload

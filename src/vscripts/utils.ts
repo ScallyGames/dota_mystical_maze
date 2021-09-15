@@ -90,6 +90,10 @@ export function RotateByCardinalDirection(position : Vector, direction : Cardina
     return rotatedInOriginalSystem;
 }
 
+export function easeInOutCubic(x: number): number {
+    return x < 0.5 ? 4 * x * x * x : 1 - Math.pow(-2 * x + 2, 3) / 2;
+}
+
 export function MultiplyMatrixWithVectorLinear(vector : Vector, matrix : number[][])
 {
     return Vector(
