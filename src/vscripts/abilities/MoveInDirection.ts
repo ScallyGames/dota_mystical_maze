@@ -1,4 +1,5 @@
 import { registerAbility } from "../lib/dota_ts_adapter";
+import { equal, isBetweenInclusive } from "../utils";
 import { VectorTargetDirectionAligned } from "./VectorTargetDirectionAligned";
 
 export class MoveInDirection extends VectorTargetDirectionAligned
@@ -36,15 +37,56 @@ export class MoveInDirection extends VectorTargetDirectionAligned
 
         if(!foundEntity) return;
 
-        let directVector = from - to as Vector;
+        let directVector = to - from as Vector;
         let directLength = directVector.Length();
         let pathLength = GridNav.FindPathLength(from, to);
         let isDirectPath = Math.abs(pathLength - directLength) < 15
 
         if (!isDirectPath) return;
 
+        let moveDescriptor = {
+            start: from,
+            end: to,
+            unit: foundEntity,
+        };
+
+        let gridSteps = directLength / this.gridSize;
+
+        for(let i = 0; i <= gridSteps; i++)
+        {
+            let location = from + directVector * i / gridSteps as Vector;
+            if(GameRules.Addon.CharacterEntities.some(x =>
+            {
+                return moveDescriptor.unit != x && equal(x.GetAbsOrigin(), location);
+            }))
+            {
+                return;
+            }
+            if(GameRules.Addon.CurrentMovements.some(x =>
+            {
+                if(Math.abs(x.start.x - x.end.x) < 128)
+                {
+                    const isCrossingVertical = Math.abs(x.start.x - location.x) < 128 && isBetweenInclusive(location.y, x.unit.GetAbsOrigin().y, x.end.y);
+                    return isCrossingVertical;
+                }
+                else if(Math.abs(x.start.y - x.end.y) < 128)
+                {
+                    const isCrossingHorizontal = Math.abs(x.start.y - location.y) < 128 && isBetweenInclusive(location.x, x.unit.GetAbsOrigin().x, x.end.x);
+                    return isCrossingHorizontal;
+                }
+                else
+                {
+                    const isCrossingStair = equal(x.end, location);
+                    return isCrossingStair;
+                }
+            }))
+            {
+                return;
+            }
+        }
+
         (foundEntity as CDOTA_BaseNPC).SetInitialGoalPosition(to);
         (foundEntity as CDOTA_BaseNPC).MoveToPosition(to);
-
+        GameRules.Addon.CurrentMovements.push(moveDescriptor);
     }
 }

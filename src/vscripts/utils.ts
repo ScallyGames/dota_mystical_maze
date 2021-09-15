@@ -94,6 +94,21 @@ export function easeInOutCubic(x: number): number {
     return x < 0.5 ? 4 * x * x * x : 1 - Math.pow(-2 * x + 2, 3) / 2;
 }
 
+export function isBetweenInclusive(x : number, min: number, max: number)
+{
+    if(min > max)
+    {
+        [min, max] = [max, min];
+    }
+
+    return x >= min && x <= max;
+}
+
+export function equal(a : Vector, b : Vector, epsilon : number = 128)
+{
+    return (a - b as Vector).Length2D() < epsilon;
+}
+
 export function MultiplyMatrixWithVectorLinear(vector : Vector, matrix : number[][])
 {
     return Vector(

@@ -1,7 +1,7 @@
 import { reloadable } from "./lib/tstl-utils";
 import { CardinalDirection, TileDefinition } from "./TileDefinition";
 import { RoomDefinitions } from './room_tables';
-import { RotateByCardinalDirection, TileCoordToWorldCoord } from "./utils";
+import { equal, RotateByCardinalDirection, TileCoordToWorldCoord } from "./utils";
 import { MapVectorKey } from "./data-structures/MapVectorKey";
 import { TileInstance } from "./TileInstance";
 import { modifier_unlock_ms_cap } from "./modifiers/modifier_unlock_ms_cap";
@@ -24,6 +24,10 @@ export class GameMode {
     };
     private TileStack: TileDefinition[] = [];
     public SpawnedTiles: MapVectorKey<TileInstance> = new MapVectorKey<TileInstance>()
+
+    public CurrentMovements: { start: Vector, end: Vector, unit: CBaseEntity }[] = [];
+
+    public CharacterEntities: CBaseEntity[] = [];
 
     public static Precache(this: void, context: CScriptPrecacheContext) {
         PrecacheModel(HeroTargetWeapons[Hero.ALCHEMIST], context);
@@ -282,6 +286,7 @@ export class GameMode {
                     x.SetAbsAngles(0, 270, 0);
                     x.SetUnitName(HeroEnumToHeroString[heroIndex]);
                     x.AddNewModifier(x, undefined, modifier_unlock_ms_cap.name, {});
+                    this.CharacterEntities.push(x);
                     let weaponModel = Entities.FindByModel(undefined, HeroWeapons[heroIndex]) as CBaseModelEntity;
 
                     weaponModel?.Destroy();
@@ -295,6 +300,20 @@ export class GameMode {
             PlayerResource.SetCameraTarget(i as PlayerID, cameraTarget);
         }
         cameraTarget?.Destroy();
+
+
+        Timers.CreateTimer(() =>
+        {
+            for(let i = this.CurrentMovements.length - 1; i >= 0; i--)
+            {
+                let x = this.CurrentMovements[i];
+                if(equal(x.unit.GetAbsOrigin(), x.end, 64))
+                {
+                    this.CurrentMovements.splice(i, 1);
+                }
+            }
+            return 0.1;
+        });
     }
 
     // Called on script_reload

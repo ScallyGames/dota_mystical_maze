@@ -1,5 +1,5 @@
 import { BaseAbility, registerAbility } from "../lib/dota_ts_adapter";
-import { AlignToGrid, TileCoordToWorldCoord, WorldCoordToTileIndex } from "../utils";
+import { AlignToGrid, equal, isBetweenInclusive, TileCoordToWorldCoord, WorldCoordToTileIndex } from "../utils";
 import { GridSize, TileSize } from "../constants";
 import { GameMode } from "../GameMode";
 
@@ -39,7 +39,7 @@ export class traverse_stairs extends BaseAbility
 
         let stairs = unitTile.stairs.find(
             s => s.connections.some(
-                x => ((x - gridCell) as Vector).Length2D() < 0.1
+                x => equal(x, gridCell, 0.1)
             )
         );
 
@@ -47,7 +47,7 @@ export class traverse_stairs extends BaseAbility
 
         let endGridCell : Vector;
 
-        if(((stairs.connections[0] - gridCell) as Vector).Length2D() < 0.1)
+        if(equal(stairs.connections[0], gridCell, 0.1))
         {
             endGridCell = stairs.connections[1];
         }
@@ -57,6 +57,44 @@ export class traverse_stairs extends BaseAbility
         }
 
         let endWorldPosition = tileBottomLeft + Vector((0.5 + endGridCell.x) * GridSize, (0.5 + endGridCell.y) * GridSize) as Vector
+
+        let moveDescriptor = {
+            start: unitPosition,
+            end: endWorldPosition,
+            unit: targetUnit,
+        };
+
+        if(GameRules.Addon.CharacterEntities.some(x =>
+        {
+            return moveDescriptor.unit != x && equal(x.GetAbsOrigin(), moveDescriptor.end);
+        }))
+        {
+            return;
+        }
+        if(GameRules.Addon.CurrentMovements.some(x =>
+        {
+            if(Math.abs(x.start.x - x.end.x) < 128)
+            {
+                const isCrossingVertical = Math.abs(x.start.x - moveDescriptor.end.x) < 128 && isBetweenInclusive(moveDescriptor.end.y, x.unit.GetAbsOrigin().y, x.end.y);
+                return isCrossingVertical;
+            }
+            else if(Math.abs(x.start.y - x.end.y) < 128)
+            {
+                const isCrossingHorizontal = Math.abs(x.start.y - moveDescriptor.end.y) < 128 && isBetweenInclusive(moveDescriptor.end.x, x.unit.GetAbsOrigin().x, x.end.x);
+                return isCrossingHorizontal;
+            }
+            else
+            {
+                const isCrossingStair = equal(x.start, moveDescriptor.end) || equal(x.end, moveDescriptor.end);
+                return isCrossingStair;
+            }
+        }))
+        {
+            return;
+        }
+
         targetUnit.MoveToPosition(endWorldPosition);
+
+        GameRules.Addon.CurrentMovements.push(moveDescriptor);
     }
 }
