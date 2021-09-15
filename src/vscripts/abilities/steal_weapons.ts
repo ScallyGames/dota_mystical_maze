@@ -10,7 +10,7 @@ export class steal_weapons extends BaseAbility
         if (IsServer())
         {
             this.SetLevel(1);
-            // this.SetActivated(false);
+            this.SetActivated(false);
         }
         (this as any).nextIndex = 0;
     }
