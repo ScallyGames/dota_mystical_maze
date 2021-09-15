@@ -288,6 +288,13 @@ export class GameMode {
                 });
             }
         }
+
+        let cameraTarget = Entities.FindByName(undefined, "camera_position_inital");
+        for(let i = 0; i < DOTA_MAX_PLAYERS; i++)
+        {
+            PlayerResource.SetCameraTarget(i as PlayerID, cameraTarget);
+        }
+        cameraTarget?.Destroy();
     }
 
     // Called on script_reload
