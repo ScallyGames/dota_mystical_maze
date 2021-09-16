@@ -10,6 +10,7 @@ export class TileDefinition
         east?: ExitDefinition,
     };
     stairs?: StairDefinition[];
+    escapeExit?: EscapeExitDefinition;
 }
 
 export class ExitDefinition
@@ -20,6 +21,12 @@ export class ExitDefinition
 export class StairDefinition
 {
     connections: Vector[];
+}
+
+export class EscapeExitDefinition
+{
+    position: Vector;
+    direction: Vector;
 }
 
 export type CardinalDirection = "north" | "south" | "east" | "west";

@@ -43,6 +43,10 @@ export const RoomDefinitions : TileDefinition[] =
                 ],
             },
         ],
+        escapeExit : {
+            position: Vector(3, 3),
+            direction: Vector(1, 0),
+        }
 	},
 	{
 		name:"tile_small_03",

@@ -1,4 +1,4 @@
-import { CardinalDirection, ExitDefinition, StairDefinition } from "./TileDefinition";
+import { CardinalDirection, EscapeExitDefinition, ExitDefinition, StairDefinition } from "./TileDefinition";
 
 export class TileInstance
 {
@@ -11,5 +11,6 @@ export class TileInstance
         east?: ExitDefinition,
     } = {};
     stairs?: StairDefinition[];
+    escapeExit?: EscapeExitDefinition;
     spawnGroupHandle: number = -1;
 }

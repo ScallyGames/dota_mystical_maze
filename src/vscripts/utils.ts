@@ -48,6 +48,25 @@ export function AlignToGrid(x : number, gridSize : number)
     return Math.round((x + gridSize / 2) / gridSize) * gridSize - gridSize / 2;
 }
 
+export const TransformationMatrices = {
+    north: [
+        [1, 0],
+        [0, 1],
+    ],
+    south: [
+        [-1, 0],
+        [0, -1],
+    ],
+    west: [
+        [0, -1],
+        [+1, 0],
+    ],
+    east: [
+        [0, +1],
+        [-1, 0],
+    ],
+};
+
 export function RotateByCardinalDirection(position : Vector, direction : CardinalDirection)
 {
     const coordinateSystemTranslationMatrix =
@@ -64,28 +83,9 @@ export function RotateByCardinalDirection(position : Vector, direction : Cardina
         [0, 0, 1],
     ];
 
-    const transformationMatrices = {
-        north: [
-            [1, 0],
-            [0, 1],
-        ],
-        south: [
-            [-1, 0],
-            [0, -1],
-        ],
-        west: [
-            [0, -1],
-            [+1, 0],
-        ],
-        east: [
-            [0, +1],
-            [-1, 0],
-        ],
-    };
-
     position.z = 1;
     let inOrigin = MultiplyMatrixWithVectorAffine(position, inverseCoordinateSystemTranslationMatrix);
-    let rotatedInOrigin = MultiplyMatrixWithVectorLinear(inOrigin, transformationMatrices[direction]);
+    let rotatedInOrigin = MultiplyMatrixWithVectorLinear(inOrigin, TransformationMatrices[direction]);
     let rotatedInOriginalSystem = MultiplyMatrixWithVectorAffine(rotatedInOrigin, coordinateSystemTranslationMatrix);
     return rotatedInOriginalSystem;
 }

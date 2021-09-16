@@ -1,7 +1,7 @@
 import { reloadable } from "./lib/tstl-utils";
 import { CardinalDirection, TileDefinition } from "./TileDefinition";
 import { RoomDefinitions } from './room_tables';
-import { equal, RotateByCardinalDirection, TileCoordToWorldCoord } from "./utils";
+import { equal, MultiplyMatrixWithVectorLinear, RotateByCardinalDirection, TileCoordToWorldCoord, TransformationMatrices } from "./utils";
 import { MapVectorKey } from "./data-structures/MapVectorKey";
 import { TileInstance } from "./TileInstance";
 import { modifier_unlock_ms_cap } from "./modifiers/modifier_unlock_ms_cap";
@@ -209,6 +209,7 @@ export class GameMode {
         tileInstance.name = tileDefinition.name;
         tileInstance.exits = tileDefinition.exits;
         tileInstance.stairs = tileDefinition.stairs;
+        tileInstance.escapeExit = tileDefinition.escapeExit;
         tileInstance.direction = direction;
         switch(direction)
         {
@@ -249,6 +250,11 @@ export class GameMode {
                     connections: x.connections.map(p => RotateByCardinalDirection(p, direction))
                 }
             });
+        }
+        if(tileInstance.escapeExit)
+        {
+            tileInstance.escapeExit.position = RotateByCardinalDirection(tileInstance.escapeExit.position, direction);
+            tileInstance.escapeExit.direction = MultiplyMatrixWithVectorLinear(tileInstance.escapeExit.direction, TransformationMatrices[direction]);
         }
 
         tileInstance.spawnGroupHandle = DOTA_SpawnMapAtPosition(
