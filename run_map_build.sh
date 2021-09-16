@@ -1,6 +1,59 @@
 #!/bin/bash
 
-for f in ./content/maps/*.vmap
+declare -a arr=(
+    "./content/maps/main.vmap"
+    "./content/maps/tile_small_00.vmap"
+    "./content/maps/tile_small_01a.vmap"
+    "./content/maps/tile_small_01a_east.vmap"
+    "./content/maps/tile_small_01a_north.vmap"
+    "./content/maps/tile_small_01a_south.vmap"
+    "./content/maps/tile_small_01a_west.vmap"
+    "./content/maps/tile_small_02.vmap"
+    "./content/maps/tile_small_02_east.vmap"
+    "./content/maps/tile_small_02_north.vmap"
+    "./content/maps/tile_small_02_south.vmap"
+    "./content/maps/tile_small_02_west.vmap"
+    "./content/maps/tile_small_03.vmap"
+    "./content/maps/tile_small_03_east.vmap"
+    "./content/maps/tile_small_03_north.vmap"
+    "./content/maps/tile_small_03_south.vmap"
+    "./content/maps/tile_small_03_west.vmap"
+    "./content/maps/tile_small_04.vmap"
+    "./content/maps/tile_small_04_east.vmap"
+    "./content/maps/tile_small_04_north.vmap"
+    "./content/maps/tile_small_04_south.vmap"
+    "./content/maps/tile_small_04_west.vmap"
+    "./content/maps/tile_small_05.vmap"
+    "./content/maps/tile_small_05_east.vmap"
+    "./content/maps/tile_small_05_north.vmap"
+    "./content/maps/tile_small_05_south.vmap"
+    "./content/maps/tile_small_05_west.vmap"
+    "./content/maps/tile_small_06.vmap"
+    "./content/maps/tile_small_06_east.vmap"
+    "./content/maps/tile_small_06_north.vmap"
+    "./content/maps/tile_small_06_south.vmap"
+    "./content/maps/tile_small_06_west.vmap"
+    "./content/maps/tile_small_07.vmap"
+    "./content/maps/tile_small_07_east.vmap"
+    "./content/maps/tile_small_07_north.vmap"
+    "./content/maps/tile_small_07_south.vmap"
+    "./content/maps/tile_small_07_west.vmap"
+    "./content/maps/tile_small_08.vmap"
+    "./content/maps/tile_small_08_east.vmap"
+    "./content/maps/tile_small_08_north.vmap"
+    "./content/maps/tile_small_08_south.vmap"
+    "./content/maps/tile_small_08_west.vmap"
+    "./content/maps/tile_small_09.vmap"
+    "./content/maps/tile_small_09_east.vmap"
+    "./content/maps/tile_small_09_north.vmap"
+    "./content/maps/tile_small_09_south.vmap"
+    "./content/maps/tile_small_09_west.vmap"
+    "./content/maps/tile_small_base.vmap"
+)
+
+
+# for f in ./content/maps/*.vmap
+for f in "${arr[@]}"
 do
     fileName="${f//.\/content\/maps\//}"
     fileName="${fileName//.vmap/}"
@@ -10,5 +63,5 @@ do
 
     "D:\SteamLibrary\steamapps\common\dota 2 beta\game\bin\win64\resourcecompiler.exe" -fshallow -maxtextureres 256 -dxlevel 110 -quiet -html -unbufferedio -noassert -i "$fullPath"  -world -phys -vis -gridnav -breakpad  -nompi  -nop4 -outroot "C:\Users\Pascal2\AppData\Local\Temp\valve\hammermapbuild\game"
 
-    mv "C:\\Users\\Pascal2\\AppData\\Local\\Temp\\valve\\hammermapbuild\\game\\dota_addons\\mystical_maze\\maps\\$fileName.vpk" "C:\\Users\\Pascal\\Documents\\Projects\\DotaMods\\mystical_maze\\game\\maps"
+    mv "C:/Users/Pascal2/AppData/Local/Temp/valve/hammermapbuild/game/dota_addons/mystical_maze/maps/$fileName.vpk" "C:/Users/Pascal/Documents/Projects/DotaMods/mystical_maze/game/maps"
 done
