@@ -1,0 +1,92 @@
+.timer
+{
+    horizontal-align: center;
+    width: 40%;
+    height: 112px;
+}
+
+#top-backdrop
+{
+    background-image: url("s2r://panorama/images/hud/reborn/inventory_bg_bg_psd.vtex");
+    background-size: cover;
+    height: 100%;
+    width: 100%;
+    border-bottom-left-radius: 16px;
+    border-bottom-right-radius: 16px;
+    margin: 0px 50px;
+}
+
+#top-backdrop-padding
+{
+    height: 100%;
+    width: 100%;
+    margin: 24px 20px 20px 20px;
+}
+
+.top-flare
+{
+    width: 50px;
+    height: 92px;
+    background-image: url("s2r://panorama/images/hud/reborn/side_flare_tall_psd.vtex");
+}
+
+#top-left-flare
+{
+    transform: scaleY(-1);
+}
+
+#top-right-flare
+{
+    transform: scaleX(-1) scaleY(-1);
+    horizontal-align: right;
+}
+
+#timer-background
+{
+    width: 100%;
+    height: 100%;
+    background-color: rgb(241, 235, 229);
+    margin: 34% 0px;
+    border: 3px solid rgb(63, 52, 38);
+    border-radius: 500px;
+}
+
+#timer-bar
+{
+    horizontal-align: center;
+    width: 40%;
+    height: 100%;
+    border: 1px solid rgba(59, 43, 33, 0.739);
+    background-color: rgb(207, 142, 57);
+    border-radius: 500px;
+}
+
+#timer-clock
+{
+    horizontal-align: center;
+    width: height-percentage(100%);
+    height: 100%;
+    background-color: rgb(235, 238, 217);
+    border: 3px solid rgb(97, 78, 60);
+    border-radius: 50%;
+}
+
+#timer-clock Panel
+{
+    vertical-align: center;
+    height: 5%;
+    background-color: rgb(42, 42, 42);
+    border-radius: 500px;
+    transform-origin: 0 50%;
+}
+
+#timer-clock-handle-minute
+{
+    width: 40%;
+    transform: rotateZ(-90deg) translateX(50%) translateX(-3px) translateY(1px);
+}
+#timer-clock-handle-hour
+{
+    width: 30%;
+    transform: rotateZ(-45deg) translateX(50%) translateX(-3px) translateY(1px);
+}

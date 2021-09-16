@@ -44,6 +44,7 @@ registerEntityFunction('OnExitAreaPortal', (trigger: any) =>
 
     if(GameRules.Addon.CharacterEntities.length == 0)
     {
+        GameRules.SetCustomVictoryMessage("\nYou did it!");
         GameRules.SetGameWinner(DotaTeam.GOODGUYS);
     }
 });

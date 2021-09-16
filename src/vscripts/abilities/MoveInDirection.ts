@@ -88,5 +88,6 @@ export class MoveInDirection extends VectorTargetDirectionAligned
         (foundEntity as CDOTA_BaseNPC).SetInitialGoalPosition(to);
         (foundEntity as CDOTA_BaseNPC).MoveToPosition(to);
         GameRules.Addon.CurrentMovements.push(moveDescriptor);
+        GameRules.Addon.IsTimerRunning = true;
     }
 }

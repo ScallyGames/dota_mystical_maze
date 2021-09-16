@@ -29,5 +29,6 @@ export class teleport_to_portal extends BaseAbility
         if(!figure) return;
 
         figure.SetAbsOrigin(target.GetAbsOrigin() + Vector(0, 0, 92) as Vector);
+        GameRules.Addon.IsTimerRunning = true;
     }
 }

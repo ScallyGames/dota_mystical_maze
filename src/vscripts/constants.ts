@@ -1,6 +1,8 @@
 export const TileSize = 2048;
 export const GridSize = TileSize / 4;
 
+export const TimerDuration = 3 * 60 + 15;
+
 export enum Hero
 {
     BARBARIAN,

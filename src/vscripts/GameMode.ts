@@ -5,7 +5,7 @@ import { equal, MultiplyMatrixWithVectorLinear, RotateByCardinalDirection, TileC
 import { MapVectorKey } from "./data-structures/MapVectorKey";
 import { TileInstance } from "./TileInstance";
 import { modifier_unlock_ms_cap } from "./modifiers/modifier_unlock_ms_cap";
-import { Hero, HeroCharacters, HeroEnumToHeroString, HeroTargetWeapons, HeroWeapons } from "./constants";
+import { Hero, HeroCharacters, HeroEnumToHeroString, HeroTargetWeapons, HeroWeapons, TimerDuration } from "./constants";
 
 declare global {
     interface CDOTAGamerules {
@@ -16,6 +16,8 @@ declare global {
 @reloadable
 export class GameMode {
     public DidSteal = false;
+    public RemainingTime = TimerDuration;
+    public IsTimerRunning = false;
     public CharactersOnShop = {
         'warrior': false,
         'barbarian': false,
@@ -28,6 +30,7 @@ export class GameMode {
     public CurrentMovements: { start: Vector, end: Vector, unit: CBaseEntity }[] = [];
 
     public CharacterEntities: CBaseEntity[] = [];
+    public PreviousTime: number = -1;
 
     public static Precache(this: void, context: CScriptPrecacheContext) {
         PrecacheModel(HeroTargetWeapons[Hero.ALCHEMIST], context);
@@ -48,21 +51,6 @@ export class GameMode {
 
         // Register event listeners for dota engine events
         ListenToGameEvent("game_rules_state_change", () => this.OnStateChange(), undefined);
-
-        // Register event listeners for events from the UI
-        CustomGameEventManager.RegisterListener("ui_panel_closed", (_, data) => {
-            print(`Player ${data.PlayerID} has closed their UI panel.`);
-
-            // Respond by sending back an example event
-            const player = PlayerResource.GetPlayer(data.PlayerID)!;
-            CustomGameEventManager.Send_ServerToPlayer(player, "example_event", {
-                myNumber: 42,
-                myBoolean: true,
-                myString: "Hello!",
-                myArrayOfNumbers: [1.414, 2.718, 3.142]
-            });
-
-        });
     }
 
     private GetValidTeamPlayers()
@@ -273,6 +261,11 @@ export class GameMode {
     private StartGameAfterFirstTile(): void
     {
         print("Game starting!");
+
+        CustomGameEventManager.Send_ServerToAllClients<TimerMaxTimeEventData>("timer_set_max_time", {
+            max_time: TimerDuration
+        });
+
         const spawnPositions = [
             Vector(0 + 256, 0 + 256, 128),
             Vector(0 + 256, 0 - 256, 128),
@@ -318,6 +311,27 @@ export class GameMode {
                     this.CurrentMovements.splice(i, 1);
                 }
             }
+
+            if(this.IsTimerRunning)
+            {
+
+            let currentTime = GameRules.GetGameTime();
+            if(this.PreviousTime > 0)
+            {
+                this.RemainingTime -= (currentTime - this.PreviousTime);
+                CustomGameEventManager.Send_ServerToAllClients<TimerTickEventData>("timer_tick", {
+                    remaining_time: this.RemainingTime
+                });
+                if(this.RemainingTime <= 0)
+                {
+                    this.RemainingTime = 0;
+                    GameRules.SetCustomVictoryMessage("\nYour time ran out. \nTry again!");
+                    GameRules.SetGameWinner(DotaTeam.BADGUYS);
+                }
+            }
+            this.PreviousTime = currentTime;
+            }
+
             return 0.1;
         });
     }

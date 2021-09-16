@@ -1,8 +1,10 @@
 <root>
 	<scripts>
         <include src="file://{resources}/scripts/custom_game/manifest.js" />
+        <include src="file://{resources}/scripts/custom_game/hide_default_ui.js" />
         <include src="file://{resources}/scripts/custom_game/vector_targeting.js" />
     </scripts>
     <Panel>
+        <CustomUIElement type="Hud"			layoutfile="file://{resources}/layout/custom_game/timer.xml" />
 	</Panel>
 </root>
