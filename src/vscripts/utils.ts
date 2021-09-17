@@ -94,6 +94,21 @@ export function easeInOutCubic(x: number): number {
     return x < 0.5 ? 4 * x * x * x : 1 - Math.pow(-2 * x + 2, 3) / 2;
 }
 
+export function easeInCubic(x: number): number
+{
+    return x * x * x;
+}
+
+export function easeInQuad(x: number): number
+{
+    return x * x * x * x;
+}
+
+export function easeInQuint(x: number): number
+{
+    return x * x * x * x * x;
+}
+
 export function isBetweenInclusive(x : number, min: number, max: number)
 {
     if(min > max)
