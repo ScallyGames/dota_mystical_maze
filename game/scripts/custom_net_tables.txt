@@ -3,5 +3,6 @@
   custom_net_tables =
   [
     "vector_targeting",
+	"minimap_info",
   ]
 }

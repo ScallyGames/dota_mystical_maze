@@ -1,0 +1,8 @@
+tile_small_09
+{
+	material materials/overviews/tile_small_09.vmat
+	pos_x -1024
+	pos_y 1024
+	scale 2.000
+}
+

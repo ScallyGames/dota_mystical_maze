@@ -172,20 +172,6 @@ export class GameMode {
         }
     }
 
-    private StartGame(): void
-    {
-        if (IsServer())
-        {
-            if(this.TileStack.length > 0)
-            {
-                this.SpawnNextTile(0, 0, "north", () =>
-                {
-                    this.StartGameAfterFirstTile();
-                });
-            }
-        }
-    }
-
     public SpawnNextTile(x : number, y : number, direction : CardinalDirection, callback = () => {}) : void
     {
         const tileDefinition = this.TileStack.pop();
@@ -245,12 +231,27 @@ export class GameMode {
             tileInstance.escapeExit.direction = MultiplyMatrixWithVectorLinear(tileInstance.escapeExit.direction, TransformationMatrices[direction]);
         }
 
+        const worldCoordinates = TileCoordToWorldCoord(x, y);
         tileInstance.spawnGroupHandle = DOTA_SpawnMapAtPosition(
             tileDefinition.name + "_" + direction,
-            TileCoordToWorldCoord(x, y),
+            worldCoordinates,
             false,
             () => {},
-            () => {
+            () =>
+            {
+                let netTable =
+                {
+                    x : x,
+                    y : y,
+                    worldX : worldCoordinates.x,
+                    worldY : worldCoordinates.y,
+                    name: tileDefinition.name,
+                    direction: direction,
+                    occupied: true,
+                }
+
+                CustomNetTables.SetTableValue("minimap_info" as never, "tile_" + x + "_" + y, netTable as never);
+
                 callback();
             },
             this
@@ -258,10 +259,24 @@ export class GameMode {
         this.SpawnedTiles.set(Vector(x, y), tileInstance);
     }
 
-    private StartGameAfterFirstTile(): void
+    private StartGame(): void
     {
         print("Game starting!");
 
+        if (IsServer())
+        {
+            if(this.TileStack.length > 0)
+            {
+                this.SpawnNextTile(0, 0, "north", () =>
+                {
+                    this.StartGameAfterFirstTile();
+                });
+            }
+        }
+    }
+
+    private StartGameAfterFirstTile() : void
+    {
         CustomGameEventManager.Send_ServerToAllClients<TimerMaxTimeEventData>("timer_set_max_time", {
             max_time: TimerDuration
         });
