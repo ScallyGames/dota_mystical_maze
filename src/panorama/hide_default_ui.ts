@@ -37,7 +37,6 @@ function FindDotaHudElement(id : string) {
 	return GetDotaHud().FindChildTraverse(id);
 }
 
-$.Msg(FindDotaHudElement("inventory_composition_layer_container"));
 FindDotaHudElement("inventory_composition_layer_container")!.visible = false;
 FindDotaHudElement("AghsStatusContainer")!.visible = false;
 FindDotaHudElement("StatBranch")!.visible = false;
