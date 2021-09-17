@@ -109,14 +109,14 @@ export function easeInQuint(x: number): number
     return x * x * x * x * x;
 }
 
-export function isBetweenInclusive(x : number, min: number, max: number)
+export function isBetweenInclusive(x : number, min: number, max: number, padding: number = 32)
 {
     if(min > max)
     {
         [min, max] = [max, min];
     }
 
-    return x >= min && x <= max;
+    return x >= min - padding && x <= max + padding;
 }
 
 export function equal(a : Vector, b : Vector, epsilon : number = 128)
