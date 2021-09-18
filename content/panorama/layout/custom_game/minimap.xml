@@ -7,9 +7,9 @@
         <include src="file://{resources}/scripts/custom_game/minimap.js" />
 	</scripts>
 
-    <Panel hittest="true" class="minimap-tiles">
-        <Panel id="minimap-tiles-overlay">
-            <Panel id="minimap-tiles-overlay-padding">
+    <Panel hittest="false" class="minimap-tiles">
+        <Panel hittest="false" id="minimap-tiles-overlay">
+            <Panel hittest="false" id="minimap-tiles-overlay-padding">
                 <Image id="tile_small_01a_north" class="minimap-tile-image" src="file://{images}/custom_game/tile_small_01a_north.tga" />
                 <Image id="tile_small_01a_west" class="minimap-tile-image" src="file://{images}/custom_game/tile_small_01a_west.tga" />
                 <Image id="tile_small_01a_east" class="minimap-tile-image" src="file://{images}/custom_game/tile_small_01a_east.tga" />
