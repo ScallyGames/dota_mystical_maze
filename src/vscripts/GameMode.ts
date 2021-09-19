@@ -5,7 +5,7 @@ import { equal, MultiplyMatrixWithVectorLinear, RotateByCardinalDirection, TileC
 import { MapVectorKey } from "./data-structures/MapVectorKey";
 import { TileInstance } from "./TileInstance";
 import { modifier_unlock_ms_cap } from "./modifiers/modifier_unlock_ms_cap";
-import { Hero, HeroCharacters, HeroEnumToHeroString, HeroTargetWeapons, HeroWeapons, TimerDuration } from "./constants";
+import { Hero, HeroCharacters, HeroEnumToHeroString, HeroTargetWeapons, HeroWeapons, TileSize, TimerDuration } from "./constants";
 
 declare global {
     interface CDOTAGamerules {
@@ -26,6 +26,13 @@ export class GameMode {
     };
     private TileStack: TileDefinition[] = [];
     public SpawnedTiles: MapVectorKey<TileInstance> = new MapVectorKey<TileInstance>()
+    public MapBounds =
+    {
+        left: -1024,
+        bottom: -1024,
+        top: 1024,
+        right: 1024,
+    }
 
     public CurrentMovements: { start: Vector, end: Vector, unit: CBaseEntity }[] = [];
 
@@ -239,6 +246,19 @@ export class GameMode {
             () => {},
             () =>
             {
+                this.MapBounds.top = math.max(this.MapBounds.top, worldCoordinates.y + TileSize / 2);
+                this.MapBounds.right = math.max(this.MapBounds.right, worldCoordinates.x + TileSize / 2);
+                this.MapBounds.bottom = math.min(this.MapBounds.bottom, worldCoordinates.y - TileSize / 2);
+                this.MapBounds.left = math.min(this.MapBounds.left, worldCoordinates.x - TileSize / 2);
+
+                const mapWidth = this.MapBounds.right - this.MapBounds.left;
+                const mapHeight = this.MapBounds.top - this.MapBounds.bottom;
+                const mapCenter = {
+                    x: (this.MapBounds.right + this.MapBounds.left) / 2,
+                    y: (this.MapBounds.top + this.MapBounds.bottom) / 2,
+                };
+                const squareSize = math.max(mapWidth, mapHeight);
+
                 let netTable =
                 {
                     x : x,
@@ -248,6 +268,12 @@ export class GameMode {
                     name: tileDefinition.name,
                     direction: direction,
                     occupied: true,
+                    mapBounds: {
+                        top: mapCenter.y + squareSize / 2,
+                        right: mapCenter.x + squareSize / 2,
+                        bottom: mapCenter.y - squareSize / 2,
+                        left: mapCenter.x - squareSize / 2,
+                    },
                 }
 
                 CustomNetTables.SetTableValue("minimap_info" as never, "tile_" + x + "_" + y, netTable as never);

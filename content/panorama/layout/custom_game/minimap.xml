@@ -8,8 +8,8 @@
 	</scripts>
 
     <Panel hittest="false" class="minimap-tiles">
-        <Panel hittest="false" id="minimap-tiles-overlay">
-            <Panel hittest="false" id="minimap-tiles-overlay-padding">
+        <Panel id="minimap-tiles-overlay">
+            <Panel id="minimap-tiles-overlay-padding">
                 <Image id="main_background" src="file://{images}/custom_game/main.tga" />
                 <Image id="tile_small_01a_north" class="minimap-tile-image" src="file://{images}/custom_game/tile_small_01a_north.tga" />
                 <Image id="tile_small_01a_west" class="minimap-tile-image" src="file://{images}/custom_game/tile_small_01a_west.tga" />
