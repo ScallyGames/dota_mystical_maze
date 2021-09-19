@@ -27,11 +27,9 @@ function OnMinimapChanged(table_name : any, key : any, data : any) {
 
     if(newMapBounds)
     {
-        $.Msg(data.mapBounds);
         allPanels.forEach(panel =>
         {
             let panelData = (panel as any).data;
-            $.Msg(panel.id);
             const topWorld = panelData.worldY + tileSize / 2;
             const rightWorld = panelData.worldX + tileSize / 2;
             const bottomWorld = panelData.worldY - tileSize / 2;

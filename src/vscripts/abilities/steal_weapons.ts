@@ -53,7 +53,6 @@ export class steal_weapons extends BaseAbility
 
             Timers.CreateTimer(() =>
             {
-                print((currentTransitionTime / transitionTime));
                 let t = easeInOutCubic(currentTransitionTime / transitionTime);
                 weapon.SetAbsOrigin(startPosition + (targetPosition - startPosition) * t as Vector);
                 let rotationT = t * 0.6;

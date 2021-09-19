@@ -23,8 +23,6 @@ export class refresh_timer extends BaseAbility
 
         const hourGlass = Entities.FindByNameWithin(undefined, '*hourglass_model', unitPosition, 512);
 
-        print(hourGlass);
-
         if (!hourGlass || (hourGlass as any).IsUsed) return;
 
         (hourGlass as any).IsUsed = true;
