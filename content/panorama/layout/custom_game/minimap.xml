@@ -47,6 +47,19 @@
                 <Image hittest="false" id="tile_small_09_west" class="minimap-tile-image" src="file://{images}/custom_game/tile_small_09_west.tga" />
                 <Image hittest="false" id="tile_small_09_east" class="minimap-tile-image" src="file://{images}/custom_game/tile_small_09_east.tga" />
                 <Image hittest="false" id="tile_small_09_south" class="minimap-tile-image" src="file://{images}/custom_game/tile_small_09_south.tga" />
+
+                <Image hittest="false" id="weapon_barbarian" class="minimap-shop-image" src="file://{images}/custom_game/weapon_barbarian_minimap_icon.tga" />
+                <Image hittest="false" id="weapon_alchemist" class="minimap-shop-image" src="file://{images}/custom_game/weapon_alchemist_minimap_icon.tga" />
+                <Image hittest="false" id="weapon_warrior" class="minimap-shop-image" src="file://{images}/custom_game/weapon_warrior_minimap_icon.tga" />
+                <Image hittest="false" id="weapon_archer" class="minimap-shop-image" src="file://{images}/custom_game/weapon_archer_minimap_icon.tga" />
+
+                <Image hittest="false" id="exit" class="minimap_exit_image" src="file://{images}/custom_game/exit_escape.tga" />
+
+                <Image hittest="false" id="hero_barbarian" class="minimap-hero-image" src="file://{images}/custom_game/barbarian_minimap_icon.tga" />
+                <Image hittest="false" id="hero_alchemist" class="minimap-hero-image" src="file://{images}/custom_game/alchemist_minimap_icon.tga" />
+                <Image hittest="false" id="hero_warrior" class="minimap-hero-image" src="file://{images}/custom_game/warrior_minimap_icon.tga" />
+                <Image hittest="false" id="hero_archer" class="minimap-hero-image" src="file://{images}/custom_game/archer_minimap_icon.tga" />
+
             </Panel>
         </Panel>
     </Panel>
