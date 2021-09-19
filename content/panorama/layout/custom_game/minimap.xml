@@ -7,46 +7,46 @@
         <include src="file://{resources}/scripts/custom_game/minimap.js" />
 	</scripts>
 
-    <Panel hittest="false" class="minimap-tiles">
-        <Panel id="minimap-tiles-overlay">
-            <Panel id="minimap-tiles-overlay-padding">
-                <Image id="main_background" src="file://{images}/custom_game/main.tga" />
-                <Image id="tile_small_01a_north" class="minimap-tile-image" src="file://{images}/custom_game/tile_small_01a_north.tga" />
-                <Image id="tile_small_01a_west" class="minimap-tile-image" src="file://{images}/custom_game/tile_small_01a_west.tga" />
-                <Image id="tile_small_01a_east" class="minimap-tile-image" src="file://{images}/custom_game/tile_small_01a_east.tga" />
-                <Image id="tile_small_01a_south" class="minimap-tile-image" src="file://{images}/custom_game/tile_small_01a_south.tga" />
-                <Image id="tile_small_02_north" class="minimap-tile-image" src="file://{images}/custom_game/tile_small_02_north.tga" />
-                <Image id="tile_small_02_west" class="minimap-tile-image" src="file://{images}/custom_game/tile_small_02_west.tga" />
-                <Image id="tile_small_02_east" class="minimap-tile-image" src="file://{images}/custom_game/tile_small_02_east.tga" />
-                <Image id="tile_small_02_south" class="minimap-tile-image" src="file://{images}/custom_game/tile_small_02_south.tga" />
-                <Image id="tile_small_03_north" class="minimap-tile-image" src="file://{images}/custom_game/tile_small_03_north.tga" />
-                <Image id="tile_small_03_west" class="minimap-tile-image" src="file://{images}/custom_game/tile_small_03_west.tga" />
-                <Image id="tile_small_03_east" class="minimap-tile-image" src="file://{images}/custom_game/tile_small_03_east.tga" />
-                <Image id="tile_small_03_south" class="minimap-tile-image" src="file://{images}/custom_game/tile_small_03_south.tga" />
-                <Image id="tile_small_04_north" class="minimap-tile-image" src="file://{images}/custom_game/tile_small_04_north.tga" />
-                <Image id="tile_small_04_west" class="minimap-tile-image" src="file://{images}/custom_game/tile_small_04_west.tga" />
-                <Image id="tile_small_04_east" class="minimap-tile-image" src="file://{images}/custom_game/tile_small_04_east.tga" />
-                <Image id="tile_small_04_south" class="minimap-tile-image" src="file://{images}/custom_game/tile_small_04_south.tga" />
-                <Image id="tile_small_05_north" class="minimap-tile-image" src="file://{images}/custom_game/tile_small_05_north.tga" />
-                <Image id="tile_small_05_west" class="minimap-tile-image" src="file://{images}/custom_game/tile_small_05_west.tga" />
-                <Image id="tile_small_05_east" class="minimap-tile-image" src="file://{images}/custom_game/tile_small_05_east.tga" />
-                <Image id="tile_small_05_south" class="minimap-tile-image" src="file://{images}/custom_game/tile_small_05_south.tga" />
-                <Image id="tile_small_06_north" class="minimap-tile-image" src="file://{images}/custom_game/tile_small_06_north.tga" />
-                <Image id="tile_small_06_west" class="minimap-tile-image" src="file://{images}/custom_game/tile_small_06_west.tga" />
-                <Image id="tile_small_06_east" class="minimap-tile-image" src="file://{images}/custom_game/tile_small_06_east.tga" />
-                <Image id="tile_small_06_south" class="minimap-tile-image" src="file://{images}/custom_game/tile_small_06_south.tga" />
-                <Image id="tile_small_07_north" class="minimap-tile-image" src="file://{images}/custom_game/tile_small_07_north.tga" />
-                <Image id="tile_small_07_west" class="minimap-tile-image" src="file://{images}/custom_game/tile_small_07_west.tga" />
-                <Image id="tile_small_07_east" class="minimap-tile-image" src="file://{images}/custom_game/tile_small_07_east.tga" />
-                <Image id="tile_small_07_south" class="minimap-tile-image" src="file://{images}/custom_game/tile_small_07_south.tga" />
-                <Image id="tile_small_08_north" class="minimap-tile-image" src="file://{images}/custom_game/tile_small_08_north.tga" />
-                <Image id="tile_small_08_west" class="minimap-tile-image" src="file://{images}/custom_game/tile_small_08_west.tga" />
-                <Image id="tile_small_08_east" class="minimap-tile-image" src="file://{images}/custom_game/tile_small_08_east.tga" />
-                <Image id="tile_small_08_south" class="minimap-tile-image" src="file://{images}/custom_game/tile_small_08_south.tga" />
-                <Image id="tile_small_09_north" class="minimap-tile-image" src="file://{images}/custom_game/tile_small_09_north.tga" />
-                <Image id="tile_small_09_west" class="minimap-tile-image" src="file://{images}/custom_game/tile_small_09_west.tga" />
-                <Image id="tile_small_09_east" class="minimap-tile-image" src="file://{images}/custom_game/tile_small_09_east.tga" />
-                <Image id="tile_small_09_south" class="minimap-tile-image" src="file://{images}/custom_game/tile_small_09_south.tga" />
+    <Panel hittest="true" class="minimap-tiles">
+        <Panel hittest="true" id="minimap-tiles-overlay">
+            <Panel hittest="true" id="minimap-tiles-overlay-padding">
+                <Image hittest="false" id="main_background" src="file://{images}/custom_game/main.tga" />
+                <Image hittest="false" id="tile_small_01a_north" class="minimap-tile-image" src="file://{images}/custom_game/tile_small_01a_north.tga" />
+                <Image hittest="false" id="tile_small_01a_west" class="minimap-tile-image" src="file://{images}/custom_game/tile_small_01a_west.tga" />
+                <Image hittest="false" id="tile_small_01a_east" class="minimap-tile-image" src="file://{images}/custom_game/tile_small_01a_east.tga" />
+                <Image hittest="false" id="tile_small_01a_south" class="minimap-tile-image" src="file://{images}/custom_game/tile_small_01a_south.tga" />
+                <Image hittest="false" id="tile_small_02_north" class="minimap-tile-image" src="file://{images}/custom_game/tile_small_02_north.tga" />
+                <Image hittest="false" id="tile_small_02_west" class="minimap-tile-image" src="file://{images}/custom_game/tile_small_02_west.tga" />
+                <Image hittest="false" id="tile_small_02_east" class="minimap-tile-image" src="file://{images}/custom_game/tile_small_02_east.tga" />
+                <Image hittest="false" id="tile_small_02_south" class="minimap-tile-image" src="file://{images}/custom_game/tile_small_02_south.tga" />
+                <Image hittest="false" id="tile_small_03_north" class="minimap-tile-image" src="file://{images}/custom_game/tile_small_03_north.tga" />
+                <Image hittest="false" id="tile_small_03_west" class="minimap-tile-image" src="file://{images}/custom_game/tile_small_03_west.tga" />
+                <Image hittest="false" id="tile_small_03_east" class="minimap-tile-image" src="file://{images}/custom_game/tile_small_03_east.tga" />
+                <Image hittest="false" id="tile_small_03_south" class="minimap-tile-image" src="file://{images}/custom_game/tile_small_03_south.tga" />
+                <Image hittest="false" id="tile_small_04_north" class="minimap-tile-image" src="file://{images}/custom_game/tile_small_04_north.tga" />
+                <Image hittest="false" id="tile_small_04_west" class="minimap-tile-image" src="file://{images}/custom_game/tile_small_04_west.tga" />
+                <Image hittest="false" id="tile_small_04_east" class="minimap-tile-image" src="file://{images}/custom_game/tile_small_04_east.tga" />
+                <Image hittest="false" id="tile_small_04_south" class="minimap-tile-image" src="file://{images}/custom_game/tile_small_04_south.tga" />
+                <Image hittest="false" id="tile_small_05_north" class="minimap-tile-image" src="file://{images}/custom_game/tile_small_05_north.tga" />
+                <Image hittest="false" id="tile_small_05_west" class="minimap-tile-image" src="file://{images}/custom_game/tile_small_05_west.tga" />
+                <Image hittest="false" id="tile_small_05_east" class="minimap-tile-image" src="file://{images}/custom_game/tile_small_05_east.tga" />
+                <Image hittest="false" id="tile_small_05_south" class="minimap-tile-image" src="file://{images}/custom_game/tile_small_05_south.tga" />
+                <Image hittest="false" id="tile_small_06_north" class="minimap-tile-image" src="file://{images}/custom_game/tile_small_06_north.tga" />
+                <Image hittest="false" id="tile_small_06_west" class="minimap-tile-image" src="file://{images}/custom_game/tile_small_06_west.tga" />
+                <Image hittest="false" id="tile_small_06_east" class="minimap-tile-image" src="file://{images}/custom_game/tile_small_06_east.tga" />
+                <Image hittest="false" id="tile_small_06_south" class="minimap-tile-image" src="file://{images}/custom_game/tile_small_06_south.tga" />
+                <Image hittest="false" id="tile_small_07_north" class="minimap-tile-image" src="file://{images}/custom_game/tile_small_07_north.tga" />
+                <Image hittest="false" id="tile_small_07_west" class="minimap-tile-image" src="file://{images}/custom_game/tile_small_07_west.tga" />
+                <Image hittest="false" id="tile_small_07_east" class="minimap-tile-image" src="file://{images}/custom_game/tile_small_07_east.tga" />
+                <Image hittest="false" id="tile_small_07_south" class="minimap-tile-image" src="file://{images}/custom_game/tile_small_07_south.tga" />
+                <Image hittest="false" id="tile_small_08_north" class="minimap-tile-image" src="file://{images}/custom_game/tile_small_08_north.tga" />
+                <Image hittest="false" id="tile_small_08_west" class="minimap-tile-image" src="file://{images}/custom_game/tile_small_08_west.tga" />
+                <Image hittest="false" id="tile_small_08_east" class="minimap-tile-image" src="file://{images}/custom_game/tile_small_08_east.tga" />
+                <Image hittest="false" id="tile_small_08_south" class="minimap-tile-image" src="file://{images}/custom_game/tile_small_08_south.tga" />
+                <Image hittest="false" id="tile_small_09_north" class="minimap-tile-image" src="file://{images}/custom_game/tile_small_09_north.tga" />
+                <Image hittest="false" id="tile_small_09_west" class="minimap-tile-image" src="file://{images}/custom_game/tile_small_09_west.tga" />
+                <Image hittest="false" id="tile_small_09_east" class="minimap-tile-image" src="file://{images}/custom_game/tile_small_09_east.tga" />
+                <Image hittest="false" id="tile_small_09_south" class="minimap-tile-image" src="file://{images}/custom_game/tile_small_09_south.tga" />
             </Panel>
         </Panel>
     </Panel>

@@ -4,7 +4,7 @@
     GameUI.SetDefaultUIEnabled( DotaDefaultUIElement_t.DOTA_DEFAULT_UI_TOP_HEROES, false );
     GameUI.SetDefaultUIEnabled( DotaDefaultUIElement_t.DOTA_DEFAULT_UI_FLYOUT_SCOREBOARD, false );
     GameUI.SetDefaultUIEnabled( DotaDefaultUIElement_t.DOTA_DEFAULT_UI_ACTION_PANEL, true );
-    GameUI.SetDefaultUIEnabled( DotaDefaultUIElement_t.DOTA_DEFAULT_UI_ACTION_MINIMAP, true );
+    GameUI.SetDefaultUIEnabled( DotaDefaultUIElement_t.DOTA_DEFAULT_UI_ACTION_MINIMAP, false );
     GameUI.SetDefaultUIEnabled( DotaDefaultUIElement_t.DOTA_DEFAULT_UI_INVENTORY_PANEL, true );
     GameUI.SetDefaultUIEnabled( DotaDefaultUIElement_t.DOTA_DEFAULT_UI_INVENTORY_SHOP, false );
     GameUI.SetDefaultUIEnabled( DotaDefaultUIElement_t.DOTA_DEFAULT_UI_INVENTORY_ITEMS, false );
@@ -73,27 +73,4 @@
     flareRight.style.backgroundImage = 'url("s2r://panorama/images/hud/reborn/side_flare_tall_psd.vtex")';
     flareRight.style.transform = 'scaleX(-1)';
     FindDotaHudElement("AbilitiesAndStatBranch")!.style.margin = "0px 46px 0px 46px";
-
-    const minimapSize = 244 + 128;
-
-    const padding = 8;
-    const minimapContainer = FindDotaHudElement('minimap_block')!;
-    minimapContainer.style.height = `${minimapSize + 2 * padding}px`;
-    minimapContainer.style.width = `${minimapSize + 2 * padding}px`;
-    minimapContainer.style.padding = `${padding}px`;
-    minimapContainer.style.backgroundImage = 'url("s2r://panorama/images/hud/reborn/inventory_bg_bg_psd.vtex")';
-    minimapContainer.style.backgroundSize = 'cover';
-
-    const minimap = FindDotaHudElement("minimap")!;
-    minimap.style.width = `${minimapSize}px`;
-    minimap.style.height = `${minimapSize}px`;
-
-    const hudSkinMinimap = FindDotaHudElement("HUDSkinMinimap")!;
-    hudSkinMinimap.visible = true;
-    hudSkinMinimap.style.height = `${2 * 92}px`;
-    hudSkinMinimap.style.width = `${2 * 34}px`;
-    hudSkinMinimap.style.backgroundImage = 'url("s2r://panorama/images/hud/reborn/side_flare_tall_psd.vtex")';
-    hudSkinMinimap.style.backgroundSize = 'cover';
-    hudSkinMinimap.style.marginLeft = `${minimapSize + 2 * padding}px`;
-    hudSkinMinimap.style.transform = 'scaleX(-1)';
 }
