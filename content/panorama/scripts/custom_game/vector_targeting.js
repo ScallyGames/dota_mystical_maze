@@ -106,7 +106,12 @@ function OnVectorTargetingStart(fStartWidth, fEndWidth, fCastLength, fCastDistan
 	const mainSelectedName = Entities.GetUnitName(mainSelected);
 	vectorTargetUnit = mainSelected;
 	const cursor = GameUI.GetCursorPosition();
-	const worldPosition = Vector_alignToGrid(GameUI.GetScreenWorldPosition(cursor), gridSize);
+
+    const cursorWorldPosition = GameUI.GetScreenWorldPosition(cursor);
+
+    if(!cursorWorldPosition) return;
+
+	const worldPosition = Vector_alignToGrid(cursorWorldPosition, gridSize);
 
 
 	// particle variables
