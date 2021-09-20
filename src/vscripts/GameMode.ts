@@ -90,6 +90,8 @@ export class GameMode {
         GameRules.SetShowcaseTime(0);
         GameRules.GetGameModeEntity().SetFogOfWarDisabled(true);
         GameRules.GetGameModeEntity().SetUnseenFogOfWarEnabled(false);
+        GameRules.GetGameModeEntity().SetDaynightCycleAdvanceRate(0);
+        GameRules.GetGameModeEntity().SetDaynightCycleDisabled(true);
 
         GameRules.GetGameModeEntity().SetCameraDistanceOverride(2048);
         GameRules.GetGameModeEntity().SetCameraZRange(10, 8192);
