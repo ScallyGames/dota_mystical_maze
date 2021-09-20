@@ -1,4 +1,10 @@
-.minimap-tiles, #main_background
+.minimap-tiles
+{
+    width: 100%;
+    height: 100%;
+}
+
+#main_background
 {
     width: 100%;
     height: 100%;
