@@ -3,6 +3,9 @@ $.Msg("Initializing tile minimap");
 const tileSize = 2048;
 const fullMapSize = 8192 * 2;
 
+let isMovingCamera = false;
+let wasMouseDownBefore = false;
+
 const allPanels : Panel[] = [];
 
 const iconEntities = [
@@ -148,9 +151,26 @@ function OnTick()
         iconReferences.set(iconName, iconReference)!;
     });
 
+    let isMouseDown = GameUI.IsMouseDown(0);
 
+    if(isMouseDown && !wasMouseDownBefore)
+    {
+        let cursorPosition = GameUI.GetCursorPosition();
 
-    if(GameUI.IsMouseDown(0))
+        let minimapPosition = minimapTilesOverlayPadding.GetPositionWithinWindow();
+        let minimapWidth = minimapTilesOverlayPadding.actuallayoutwidth;
+        let minimapHeight = minimapTilesOverlayPadding.actuallayoutheight;
+
+        if(
+            isWithin(cursorPosition[0], minimapPosition.x, minimapPosition.x + minimapWidth) &&
+            isWithin(cursorPosition[1], minimapPosition.y, minimapPosition.y + minimapHeight)
+        )
+        {
+            isMovingCamera = true;
+        }
+    }
+
+    if(isMovingCamera)
     {
         let cursorPosition = GameUI.GetCursorPosition();
 
@@ -178,6 +198,14 @@ function OnTick()
         }
 
     }
+
+    if(!isMouseDown)
+    {
+        isMovingCamera = false;
+    }
+
+    wasMouseDownBefore = isMouseDown;
+
     boundsChanged = false;
 }
 
