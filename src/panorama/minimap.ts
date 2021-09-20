@@ -113,13 +113,18 @@ function OnTick()
 {
     iconReferences.forEach(( _, iconName ) =>
     {
+        let iconReference = iconReferences.get(iconName)!;
+
         const heroEntityIds = Entities.GetAllEntitiesByName(iconName);
 
-        if(heroEntityIds.length === 0) return;
+        if(heroEntityIds.length === 0)
+        {
+            iconReference.panel.style.visibility = "collapse";
+            return;
+        }
 
         const heroPosition = Entities.GetAbsOrigin(heroEntityIds[0]);
 
-        let iconReference = iconReferences.get(iconName)!;
 
         if( !boundsChanged &&
             heroPosition[0] == iconReference.lastPosition.x &&
