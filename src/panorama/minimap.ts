@@ -120,13 +120,46 @@ CustomNetTables.SubscribeNetTableListener("minimap_info" as any as never, OnMini
 
 function OnTick()
 {
-    iconReferences.forEach(( _, iconName ) =>
+    UpdateMinimapIcons();
+
+    let isMouseDown = GameUI.IsMouseDown(0);
+
+    if(isMouseDown && !wasMouseDownBefore)
+    {
+        let cursorPosition = GameUI.GetCursorPosition();
+
+        if(IsWithinMinimapBounds(cursorPosition))
+        {
+            isMovingCamera = true;
+        }
+    }
+
+    if(isMovingCamera)
+    {
+        UpdateCameraPosition();
+    }
+
+    if(!isMouseDown)
+    {
+        isMovingCamera = false;
+    }
+
+    UpdateCameraCornerIndicators();
+
+    wasMouseDownBefore = isMouseDown;
+
+    boundsChanged = false;
+}
+
+function UpdateMinimapIcons()
+{
+    iconReferences.forEach((_, iconName) =>
     {
         let iconReference = iconReferences.get(iconName)!;
 
         const heroEntityIds = Entities.GetAllEntitiesByName(iconName);
 
-        if(heroEntityIds.length === 0)
+        if (heroEntityIds.length === 0)
         {
             iconReference.panel.style.visibility = "collapse";
             return;
@@ -135,7 +168,8 @@ function OnTick()
         const heroPosition = Entities.GetAbsOrigin(heroEntityIds[0]);
 
 
-        if( !boundsChanged &&
+        if (
+            !boundsChanged &&
             heroPosition[0] == iconReference.lastPosition.x &&
             heroPosition[1] == iconReference.lastPosition.y
         ) return;
@@ -146,12 +180,13 @@ function OnTick()
             y: heroPosition[1],
         };
 
-        const heroPositionMinimapSpace = {
+        const heroPositionMinimapSpace =
+        {
             x: (heroPosition[0] - mapBounds.left) / (mapBounds.right - mapBounds.left) * minimapSize,
             y: (heroPosition[1] - mapBounds.bottom) / (mapBounds.top - mapBounds.bottom) * minimapSize,
-        }
+        };
 
-        let newMargin =  `
+        let newMargin = `
             ${minimapSize - heroPositionMinimapSpace.y - iconReference.iconSize / 2}px
             ${minimapSize - heroPositionMinimapSpace.x - iconReference.iconSize / 2}px
             ${heroPositionMinimapSpace.y - iconReference.iconSize / 2}px
@@ -161,64 +196,38 @@ function OnTick()
         iconReference.panel.style.margin = newMargin;
         iconReference.panel.style.visibility = "visible";
 
-
         iconReferences.set(iconName, iconReference)!;
     });
+}
 
-    let isMouseDown = GameUI.IsMouseDown(0);
+function UpdateCameraPosition()
+{
+    let cursorPosition = GameUI.GetCursorPosition();
 
-    if(isMouseDown && !wasMouseDownBefore)
+    if (IsWithinMinimapBounds(cursorPosition))
     {
-        let cursorPosition = GameUI.GetCursorPosition();
-
         let minimapPosition = minimapTilesOverlayPadding.GetPositionWithinWindow();
         let minimapWidth = minimapTilesOverlayPadding.actuallayoutwidth;
         let minimapHeight = minimapTilesOverlayPadding.actuallayoutheight;
 
-        if(
-            isWithin(cursorPosition[0], minimapPosition.x, minimapPosition.x + minimapWidth) &&
-            isWithin(cursorPosition[1], minimapPosition.y, minimapPosition.y + minimapHeight)
-        )
+        let minimapCursorPosition =
         {
-            isMovingCamera = true;
-        }
+            x: cursorPosition[0] - minimapPosition.x,
+            y: minimapHeight - (cursorPosition[1] - minimapPosition.y),
+        };
+
+        let xPercent = minimapCursorPosition.x / minimapWidth;
+        let yPercent = minimapCursorPosition.y / minimapHeight;
+
+        let worldX = mapBounds.left + (mapBounds.right - mapBounds.left) * xPercent;
+        let worldY = mapBounds.bottom + (mapBounds.top - mapBounds.bottom) * yPercent;
+
+        GameUI.SetCameraTargetPosition([worldX, worldY, 0], 0.1);
     }
+}
 
-    if(isMovingCamera)
-    {
-        let cursorPosition = GameUI.GetCursorPosition();
-
-        let minimapPosition = minimapTilesOverlayPadding.GetPositionWithinWindow();
-        let minimapWidth = minimapTilesOverlayPadding.actuallayoutwidth;
-        let minimapHeight = minimapTilesOverlayPadding.actuallayoutheight;
-
-        if(
-            isWithin(cursorPosition[0], minimapPosition.x, minimapPosition.x + minimapWidth) &&
-            isWithin(cursorPosition[1], minimapPosition.y, minimapPosition.y + minimapHeight)
-        )
-        {
-            let minimapCursorPosition = {
-                x: cursorPosition[0] - minimapPosition.x,
-                y: minimapHeight - (cursorPosition[1] - minimapPosition.y),
-            }
-
-            let xPercent = minimapCursorPosition.x / minimapWidth;
-            let yPercent = minimapCursorPosition.y / minimapHeight;
-
-            let worldX = mapBounds.left + (mapBounds.right - mapBounds.left) * xPercent;
-            let worldY = mapBounds.bottom + (mapBounds.top - mapBounds.bottom) * yPercent;
-
-            GameUI.SetCameraTargetPosition([worldX, worldY, 0], 0.1);
-        }
-
-    }
-
-    if(!isMouseDown)
-    {
-        isMovingCamera = false;
-    }
-
-    //#region Camera corner indicators
+function UpdateCameraCornerIndicators()
+{
     let screenWidth = Game.GetScreenWidth();
     let screenHeight = Game.GetScreenHeight()
     // Magic multipliers are just there because of how the player percives it
@@ -231,12 +240,15 @@ function OnTick()
     UpdateCameraCorner(screenTopRight, cameraIndicatorTopRight);
     UpdateCameraCorner(screenBottomLeft, cameraIndicatorBottomLeft);
     UpdateCameraCorner(screenBottomRight, cameraIndicatorBottomRight);
-    //#endregion
+}
 
-
-    wasMouseDownBefore = isMouseDown;
-
-    boundsChanged = false;
+function IsWithinMinimapBounds(cursorPosition: [number, number])
+{
+    let minimapPosition = minimapTilesOverlayPadding.GetPositionWithinWindow();
+    let minimapWidth = minimapTilesOverlayPadding.actuallayoutwidth;
+    let minimapHeight = minimapTilesOverlayPadding.actuallayoutheight;
+    return  IsWithin(cursorPosition[0], minimapPosition.x, minimapPosition.x + minimapWidth) &&
+            IsWithin(cursorPosition[1], minimapPosition.y, minimapPosition.y + minimapHeight);
 }
 
 function ScreenToWorld(x: number, y: number)
@@ -246,7 +258,8 @@ function ScreenToWorld(x: number, y: number)
     let cameraRight = Vector_cross(cameraForward, [0, 0, 1]);
     let cameraUp = Vector_cross(cameraRight, cameraForward);
 
-    let cubePosition = [
+    let cubePosition =
+    [
         [+1024, -1024 * 0.5, +1024],
     ];
 
@@ -285,7 +298,8 @@ function ScreenToWorld(x: number, y: number)
     return zeroPlaneIntersection;
 }
 
-function UpdateCameraCorner(screenPosition: ArrayVector, panel: Panel) {
+function UpdateCameraCorner(screenPosition: ArrayVector, panel: Panel)
+{
     const screenPositionMinimapSpace = WorldSpaceToMinimapSpace(screenPosition);
     if (screenPositionMinimapSpace.x <= minimapSize || screenPositionMinimapSpace.y <= minimapSize)
     {
@@ -317,7 +331,7 @@ function GetRayPlaneIntersection(
     return Vector_add(rayOrigin, Vector_mult(rayDirection, t));
 }
 
-function isWithin(x: number, min: number, max: number): boolean
+function IsWithin(x: number, min: number, max: number): boolean
 {
     return min <= x && x <= max;
 }
