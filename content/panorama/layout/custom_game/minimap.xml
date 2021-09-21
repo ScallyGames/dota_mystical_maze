@@ -60,6 +60,10 @@
                 <Image hittest="false" id="hero_warrior" class="minimap-hero-image" src="file://{images}/custom_game/warrior_minimap_icon.tga" />
                 <Image hittest="false" id="hero_archer" class="minimap-hero-image" src="file://{images}/custom_game/archer_minimap_icon.tga" />
 
+                <Panel hittest="false" id="camera_area_top_left" class="minimap-camera-corner"></Panel>
+                <Panel hittest="false" id="camera_area_top_right" class="minimap-camera-corner"></Panel>
+                <Panel hittest="false" id="camera_area_bottom_left" class="minimap-camera-corner"></Panel>
+                <Panel hittest="false" id="camera_area_bottom_right" class="minimap-camera-corner"></Panel>
             </Panel>
         </Panel>
     </Panel>

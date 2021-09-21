@@ -1,7 +1,16 @@
 $.Msg("Initializing tile minimap");
 
+type ArrayVector = [number, number, number];
+
 const tileSize = 2048;
 const fullMapSize = 8192 * 2;
+
+const cameraIndicator = $('#camera_area_bottom_left');
+
+const cameraIndicatorTopLeft = $('#camera_area_top_left');
+const cameraIndicatorTopRight = $('#camera_area_top_right');
+const cameraIndicatorBottomLeft = $('#camera_area_bottom_left');
+const cameraIndicatorBottomRight = $('#camera_area_bottom_right');
 
 let isMovingCamera = false;
 let wasMouseDownBefore = false;
@@ -209,9 +218,103 @@ function OnTick()
         isMovingCamera = false;
     }
 
+    //#region Camera corner indicators
+    let screenWidth = Game.GetScreenWidth();
+    let screenHeight = Game.GetScreenHeight()
+    // Magic multipliers are just there because of how the player percives it
+    const screenTopLeft = ScreenToWorld(-screenWidth / 2 * 0.7, +screenHeight / 2 * 0.6);
+    const screenTopRight = ScreenToWorld(+screenWidth / 2 * 0.7, +screenHeight / 2 * 0.6);
+    const screenBottomLeft = ScreenToWorld(-screenWidth / 2 * 0.8, -screenHeight / 2 * 0.8);
+    const screenBottomRight = ScreenToWorld(+screenWidth / 2 * 0.8, -screenHeight / 2 * 0.8);
+
+    UpdateCameraCorner(screenTopLeft, cameraIndicatorTopLeft);
+    UpdateCameraCorner(screenTopRight, cameraIndicatorTopRight);
+    UpdateCameraCorner(screenBottomLeft, cameraIndicatorBottomLeft);
+    UpdateCameraCorner(screenBottomRight, cameraIndicatorBottomRight);
+    //#endregion
+
+
     wasMouseDownBefore = isMouseDown;
 
     boundsChanged = false;
+}
+
+function ScreenToWorld(x: number, y: number)
+{
+    let cameraPosition = GameUI.GetCameraPosition();
+    let cameraForward = Vector_normalize(Vector_sub(GameUI.GetCameraLookAtPosition(), cameraPosition));
+    let cameraRight = Vector_cross(cameraForward, [0, 0, 1]);
+    let cameraUp = Vector_cross(cameraRight, cameraForward);
+
+    let cubePosition = [
+        [+1024, -1024 * 0.5, +1024],
+    ];
+
+    let cubeDistanceOffset = 1024;
+
+
+    let cubeWorldPosition = cubePosition.map(x =>
+    {
+        return Vector_add(
+            cameraPosition,
+            Vector_mult(cameraForward, cubeDistanceOffset),
+            Vector_mult(cameraRight, x[0]),
+            Vector_mult(cameraForward, x[1]),
+            Vector_mult(cameraUp, x[2]),
+        );
+    });
+
+    let cubeScreenPosition = cubeWorldPosition.map(x =>
+    {
+        return [Game.WorldToScreenX(...x), Game.WorldToScreenY(...x), 0];
+    });
+
+    let screenWidth = Game.GetScreenWidth();
+    let nearPlaneDistance = cubeScreenPosition.map((x, i) =>
+    {
+        return (cubeDistanceOffset + cubePosition[i][1]) / cubePosition[i][0] * (x[0] - screenWidth / 2);
+    })[0];
+
+    let rayDirection = Vector_normalize(Vector_add(
+        Vector_mult(cameraRight, x),
+        Vector_mult(cameraUp, y),
+        Vector_mult(cameraForward, nearPlaneDistance)
+    ));
+
+    let zeroPlaneIntersection = GetRayPlaneIntersection(cameraPosition, rayDirection, [0, 0, 1], 0);
+    return zeroPlaneIntersection;
+}
+
+function UpdateCameraCorner(screenPosition: ArrayVector, panel: Panel) {
+    const screenPositionMinimapSpace = WorldSpaceToMinimapSpace(screenPosition);
+    if (screenPositionMinimapSpace.x <= minimapSize || screenPositionMinimapSpace.y <= minimapSize)
+    {
+        panel.style.visibility = "visible";
+        panel.style.margin = `${minimapSize - screenPositionMinimapSpace.y}px ${minimapSize - screenPositionMinimapSpace.x - 32}px ${screenPositionMinimapSpace.y - 32}px ${screenPositionMinimapSpace.x}px`;
+    }
+    else
+    {
+        panel.style.visibility = "collapse";
+    }
+}
+
+function WorldSpaceToMinimapSpace(pos: ArrayVector)
+{
+    return {
+        x: (pos[0] - mapBounds.left) / (mapBounds.right - mapBounds.left) * minimapSize,
+        y: (pos[1] - mapBounds.bottom) / (mapBounds.top - mapBounds.bottom) * minimapSize,
+    }
+}
+
+function GetRayPlaneIntersection(
+    rayOrigin: ArrayVector,
+    rayDirection: ArrayVector,
+    planeNormal: ArrayVector,
+    planeDistance: number
+)
+{
+    let t = (-planeDistance - Vector_dot(rayOrigin, planeNormal)) / Vector_dot(rayDirection, planeNormal);
+    return Vector_add(rayOrigin, Vector_mult(rayDirection, t));
 }
 
 function isWithin(x: number, min: number, max: number): boolean
@@ -228,3 +331,68 @@ function Tick ()
 }
 
 $.Schedule(0, Tick);
+
+
+
+
+
+
+// Vector maths from vector_targeting.js
+function Vector_normalize(vec: ArrayVector): ArrayVector
+{
+	const val = 1 / Math.sqrt(Math.pow(vec[0], 2) + Math.pow(vec[1], 2) + Math.pow(vec[2], 2));
+	return [vec[0] * val, vec[1] * val, vec[2] * val];
+}
+
+function Vector_mult(vec: ArrayVector, mult: number): ArrayVector
+{
+	return [vec[0] * mult, vec[1] * mult, vec[2] * mult];
+}
+
+function Vector_add(operand1: ArrayVector, ... operands : ArrayVector[]): ArrayVector
+{
+	return [
+        operands.reduce<number>((a, b) => a + b[0], operand1[0]),
+        operands.reduce<number>((a, b) => a + b[1], operand1[1]),
+        operands.reduce<number>((a, b) => a + b[2], operand1[2]),
+    ];
+}
+
+function Vector_sub(operand1: ArrayVector, ... operands : ArrayVector[]): ArrayVector
+{
+	return [
+        operands.reduce<number>((a, b) => a - b[0], operand1[0]),
+        operands.reduce<number>((a, b) => a - b[1], operand1[1]),
+        operands.reduce<number>((a, b) => a - b[2], operand1[2]),
+    ];
+}
+
+function Vector_negate(vec: ArrayVector): ArrayVector
+{
+	return [-vec[0], -vec[1], -vec[2]];
+}
+
+function Vector_flatten(vec: ArrayVector): ArrayVector
+{
+	return [vec[0], vec[1], 0];
+}
+
+function Vector_raiseZ(vec: ArrayVector, inc: number): ArrayVector
+{
+	return [vec[0], vec[1], vec[2] + inc];
+}
+
+function Vector_dot(vec1: ArrayVector, vec2: ArrayVector): number
+{
+    return vec1[0] * vec2[0] + vec1[1] * vec2[1] + vec1[2] * vec2[2];
+}
+
+
+function Vector_cross(vec1: ArrayVector, vec2: ArrayVector): ArrayVector
+{
+    return [
+        vec1[1] * vec2[2] - vec1[2] * vec2[1],
+        vec1[2] * vec2[0] - vec1[0] * vec2[2],
+        vec1[0] * vec2[1] - vec1[1] * vec2[0],
+    ]
+}
