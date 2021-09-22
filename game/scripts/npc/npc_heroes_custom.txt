@@ -32,6 +32,12 @@
         "Ability24"					""
         "Ability25"					""
 
+
+        "SoundSet"		"0"
+        "VoiceFile"		"soundevents/voscripts/game_sounds_vo_antimage.vsndevts"
+        "PickSound"		"axe_axe_spawn_01"
+        "BanSound"		"axe_axe_anger_01"
+
         //"AttackCapabilities"		"DOTA_UNIT_CAP_NO_ATTACK"
 
 		"AttributePrimary"		    "DOTA_ATTRIBUTE_STRENGTH"
@@ -79,6 +85,11 @@
         "Ability23"					""
         "Ability24"					""
         "Ability25"					""
+
+        "SoundSet"		"0"
+        "VoiceFile"		"soundevents/voscripts/game_sounds_vo_antimage.vsndevts"
+        "PickSound"		"axe_axe_spawn_01"
+        "BanSound"		"axe_axe_anger_01"
 
         //"AttackCapabilities"		"DOTA_UNIT_CAP_NO_ATTACK"
 
@@ -129,6 +140,11 @@
         "Ability24"					""
         "Ability25"					""
 
+        "SoundSet"		"0"
+        "VoiceFile"		"soundevents/voscripts/game_sounds_vo_antimage.vsndevts"
+        "PickSound"		"axe_axe_spawn_01"
+        "BanSound"		"axe_axe_anger_01"
+
         //"AttackCapabilities"		"DOTA_UNIT_CAP_NO_ATTACK"
 
 
@@ -177,6 +193,11 @@
         "Ability23"					""
         "Ability24"					""
         "Ability25"					""
+
+        "SoundSet"		"0"
+        "VoiceFile"		"soundevents/voscripts/game_sounds_vo_antimage.vsndevts"
+        "PickSound"		"axe_axe_spawn_01"
+        "BanSound"		"axe_axe_anger_01"
 
         //"AttackCapabilities"		"DOTA_UNIT_CAP_NO_ATTACK"
 
