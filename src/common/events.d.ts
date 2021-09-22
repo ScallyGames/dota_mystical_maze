@@ -15,6 +15,7 @@
 interface CustomGameEventDeclarations {
     timer_tick: TimerTickEventData;
     timer_set_max_time: TimerMaxTimeEventData;
+    player_added_event: PlayerAddedEvent;
 }
 
 interface TimerTickEventData {
@@ -23,4 +24,12 @@ interface TimerTickEventData {
 
 interface TimerMaxTimeEventData {
     max_time: number;
+}
+
+interface PlayerAddedEvent
+{
+    player_id: number;
+    player_name: string;
+    hero_name: string;
+    ability_names: string[];
 }

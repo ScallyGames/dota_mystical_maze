@@ -34,7 +34,7 @@
         "ScriptFile" "abilities/steal_weapons"
 		"AbilityBehavior"		        "DOTA_ABILITY_BEHAVIOR_NO_TARGET"
 		"AbilityUnitDamageType"		    "DAMAGE_TYPE_NONE"
-        "AbilityTextureName"			"steal"
+        "AbilityTextureName"			"steal_weapons"
         "MaxLevel"						"1"
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
@@ -58,7 +58,7 @@
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_BUILDING"
 		"AbilityUnitTargetFlags"		"DOTA_UNIT_TARGET_FLAG_INVULNERABLE"
 		"AbilityUnitDamageType"		    "DAMAGE_TYPE_NONE"
-        "AbilityTextureName"			"teleport"
+        "AbilityTextureName"			"teleport_to_portal"
         "MaxLevel"						"1"
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
@@ -81,7 +81,7 @@
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO"
 		"AbilityUnitDamageType"		    "DAMAGE_TYPE_NONE"
-        "AbilityTextureName"			"search"
+        "AbilityTextureName"			"explore"
         "MaxLevel"						"1"
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
@@ -125,7 +125,7 @@
         "ScriptFile" "abilities/move_north"
 		"AbilityBehavior"		        "DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_VECTOR_TARGETING"
 		"AbilityUnitDamageType"		    "DAMAGE_TYPE_NONE"
-        "AbilityTextureName"			"arrow_up"
+        "AbilityTextureName"			"move_north"
         "MaxLevel"						"1"
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
@@ -151,7 +151,7 @@
         "ScriptFile" "abilities/move_south"
 		"AbilityBehavior"		        "DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_VECTOR_TARGETING"
 		"AbilityUnitDamageType"		    "DAMAGE_TYPE_NONE"
-        "AbilityTextureName"			"arrow_down"
+        "AbilityTextureName"			"move_south"
         "MaxLevel"						"1"
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
@@ -177,7 +177,7 @@
         "ScriptFile" "abilities/move_west"
 		"AbilityBehavior"		        "DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_VECTOR_TARGETING"
 		"AbilityUnitDamageType"		    "DAMAGE_TYPE_NONE"
-        "AbilityTextureName"			"arrow_left"
+        "AbilityTextureName"			"move_west"
         "MaxLevel"						"1"
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
@@ -203,7 +203,7 @@
         "ScriptFile" "abilities/move_east"
 		"AbilityBehavior"		        "DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_VECTOR_TARGETING"
 		"AbilityUnitDamageType"		    "DAMAGE_TYPE_NONE"
-        "AbilityTextureName"			"arrow_right"
+        "AbilityTextureName"			"move_east"
         "MaxLevel"						"1"
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------

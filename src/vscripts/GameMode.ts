@@ -79,7 +79,7 @@ export class GameMode {
 
     private configure(): void {
         GameRules.SetCustomGameTeamMaxPlayers(DotaTeam.GOODGUYS, 4);
-        GameRules.SetCustomGameTeamMaxPlayers(DotaTeam.BADGUYS, 1);
+        GameRules.SetCustomGameTeamMaxPlayers(DotaTeam.BADGUYS, 0);
 
 
         GameRules.SetCustomGameSetupRemainingTime(1);
@@ -95,6 +95,32 @@ export class GameMode {
 
         GameRules.GetGameModeEntity().SetCameraDistanceOverride(2048);
         GameRules.GetGameModeEntity().SetCameraZRange(10, 8192);
+
+        ListenToGameEvent('npc_spawned', event =>
+        {
+            let spawnedUnit = event.entindex && EntIndexToHScript(event.entindex) as CDOTA_BaseNPC;
+
+            if(spawnedUnit && spawnedUnit.IsRealHero())
+            {
+                let controllingPlayer = spawnedUnit.GetPlayerOwner();
+
+                if(controllingPlayer)
+                {
+                    const abilities = [];
+                    let ability0 = spawnedUnit.GetAbilityByIndex(0)?.GetAbilityName()
+                    let ability1 = spawnedUnit.GetAbilityByIndex(1)?.GetAbilityName()
+                    ability0 && abilities.push(ability0);
+                    ability1 && abilities.push(ability1);
+
+                    CustomGameEventManager.Send_ServerToAllClients('player_added_event', {
+                        player_id: controllingPlayer.GetPlayerID(),
+                        hero_name: spawnedUnit.GetUnitName(),
+                        player_name: PlayerResource.GetPlayerName(controllingPlayer.GetPlayerID()),
+                        ability_names: abilities,
+                    });
+                }
+            }
+        }, undefined);
 
         this.initilaizeRooms();
     }

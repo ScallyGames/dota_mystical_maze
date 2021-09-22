@@ -1,0 +1,32 @@
+<root>
+	<styles>
+        <include src="file://{resources}/styles/custom_game/player_info.css" />
+	</styles>
+	<scripts>
+        <include src="file://{resources}/scripts/custom_game/player_portrait.js" />
+        <include src="file://{resources}/scripts/custom_game/player_info.js" />
+	</scripts>
+
+    <snippets>
+        <snippet name="PlayerPortrait">
+            <Panel class="player-portrait" hittest="false">
+                <Panel class="player-portrait-content">
+                    <Panel class="hero-image-crop">
+                        <Image id="hero-image" class="hero-image" hittest="false" />
+                    </Panel>
+                    <Panel class="info">
+                        <Label id="player-name" class="player-name" />
+                        <Panel id="player-abilities" class="player-abilities">
+
+                        </Panel>
+                    </Panel>
+                </Panel>
+            </Panel>
+        </snippet>
+    </snippets>
+
+    <Panel hittest="false" class="player-info-panel">
+        <Panel id="player-info-group-left" class="player-info-group"></Panel>
+        <Panel id="player-info-group-right" class="player-info-group"></Panel>
+    </Panel>
+</root>

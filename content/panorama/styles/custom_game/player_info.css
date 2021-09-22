@@ -1,0 +1,149 @@
+.player-info-panel
+{
+    vertical-align: top;
+    margin-top: 10%;
+    width: 100%;
+    height: 30%;
+}
+
+.player-info-group
+{
+    width: 20%;
+    height: 100%;
+    flow-children: down;
+}
+
+#player-info-group-left
+{
+    horizontal-align: left;
+}
+
+#player-info-group-right
+{
+    horizontal-align: right;
+}
+
+.player-portrait
+{
+    width: 100%;
+    height: 50%;
+}
+
+.player-portrait-content
+{
+    margin: 8px 0px;
+    padding: 0px 8px;
+    width: 100%;
+    height: 100%;
+    flow-children: right;
+    background-image: url("s2r://panorama/images/hud/reborn/inventory_bg_bg_psd.vtex");
+    border-top-right-radius: 16px;
+    border-bottom-right-radius: 16px;
+    background-size: cover;
+}
+
+.hero-image-crop
+{
+    margin: 16px;
+    height: 100%;
+    width: height-percentage(100%);
+    overflow: clip;
+}
+
+.hero-image
+{
+    height: 100%;
+    width: height-percentage(140%);
+    margin-top: 0%;
+    background-color: black;
+}
+
+.hero-image.npc_dota_hero_lone_druid
+{
+    margin-left: -40%;
+}
+.hero-image.npc_dota_hero_phantom_assassin
+{
+    margin-left: -24%;
+}
+.hero-image.npc_dota_hero_kunkka
+{
+    margin-left: -1%;
+
+}
+.hero-image.npc_dota_hero_omniknight
+{
+    margin-left: -10%;
+}
+#player-info-group-right .hero-image.npc_dota_hero_lone_druid
+{
+    margin-left: 5%;
+}
+#player-info-group-right .hero-image.npc_dota_hero_phantom_assassin
+{
+    margin-left: -16%;
+}
+#player-info-group-right .hero-image.npc_dota_hero_kunkka
+{
+    margin-left: -40%;
+
+}
+#player-info-group-right .hero-image.npc_dota_hero_omniknight
+{
+    margin-left: -40%;
+}
+
+.player-name
+{
+    color: white;
+    font-size: 24px;
+    margin: 12px 8px;
+    text-overflow: ellipsis;
+}
+
+.player-abilities
+{
+    width: 100%;
+    height: 100%;
+    flow-children: right;
+}
+
+.info
+{
+    width: 100%;
+    height: 100%;
+    margin: 16px 0px;
+    flow-children: down;
+}
+
+.player-abilities DOTAAbilityImage
+{
+    margin: 8px 8px;
+    height: 100%;
+    width: height-percentage(100%);
+}
+
+#player-info-group-right .player-portrait-content
+{
+    flow-children: left;
+
+    border-top-right-radius: 0px;
+    border-bottom-right-radius: 0px;
+    border-top-left-radius: 16px;
+    border-bottom-left-radius: 16px;
+}
+
+#player-info-group-right .player-abilities
+{
+    flow-children: left;
+}
+
+#player-info-group-right .player-name
+{
+    horizontal-align: right;
+}
+
+#player-info-group-right .hero-image
+{
+    transform: scaleX(-1);
+}
