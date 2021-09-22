@@ -93,8 +93,8 @@ export class GameMode {
         GameRules.GetGameModeEntity().SetDaynightCycleAdvanceRate(0);
         GameRules.GetGameModeEntity().SetDaynightCycleDisabled(true);
 
-        GameRules.GetGameModeEntity().SetCameraDistanceOverride(2048);
-        GameRules.GetGameModeEntity().SetCameraZRange(10, 8192);
+        GameRules.GetGameModeEntity().SetCameraDistanceOverride(2048 * 1.5);
+        GameRules.GetGameModeEntity().SetCameraZRange(1024, 8192 * 4);
 
         ListenToGameEvent('npc_spawned', event =>
         {
