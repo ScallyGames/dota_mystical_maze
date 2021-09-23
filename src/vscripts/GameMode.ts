@@ -44,6 +44,7 @@ export class GameMode {
         PrecacheModel(HeroTargetWeapons[Hero.ARCHER], context);
         PrecacheModel(HeroTargetWeapons[Hero.BARBARIAN], context);
         PrecacheModel(HeroTargetWeapons[Hero.WARRIOR], context);
+        PrecacheResource("soundfile", "soundevents/custom_sounds.vsndevts", context);
     }
 
     public static Activate(this: void)
@@ -121,6 +122,13 @@ export class GameMode {
                 }
             }
         }, undefined);
+
+        CustomGameEventManager.RegisterListener("activate_player_bonk", (player, event) =>
+        {
+            let hero = PlayerResource.GetSelectedHeroEntity((EntIndexToHScript(player) as CDOTAPlayer).GetPlayerID());
+            hero?.SetCursorCastTarget(PlayerResource.GetSelectedHeroEntity(event.target_player_id));
+            hero?.FindAbilityByName('do_something')?.OnSpellStart();
+        });
 
         this.initilaizeRooms();
     }

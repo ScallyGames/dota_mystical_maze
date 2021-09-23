@@ -41,7 +41,7 @@ const iconReferences = new Map([
 ]);
 
 
-const minimapSize = 244 + 128 * 1.5;
+const minimapSize = 244 + 128 * 1.2;
 const padding = 8;
 const minimapContainer = $('#minimap-tiles-overlay')!;
 minimapContainer.style.height = `${minimapSize + 2 * padding}px`;

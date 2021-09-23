@@ -20,13 +20,21 @@
 
                         </Panel>
                     </Panel>
+                    <Panel id="bonk-player" class="bonk-player" hittest="true">
+                        <DOTAAbilityImage abilityname="do_something" />
+                    </Panel>
                 </Panel>
             </Panel>
         </snippet>
     </snippets>
 
     <Panel hittest="false" class="player-info-panel">
-        <Panel id="player-info-group-left" class="player-info-group"></Panel>
-        <Panel id="player-info-group-right" class="player-info-group"></Panel>
+        <Panel id="player-panel" class="player-panel">
+            <Panel id="player-info-group-left" class="player-info-group"></Panel>
+            <Panel id="player-info-group-right" class="player-info-group"></Panel>
+        </Panel>
+        <Panel id="bonk-stick" hittest="false">
+            <Image id="bonk-stick-image" src="file://{images}/custom_game/bonk-stick.svg" />
+        </Panel>
     </Panel>
 </root>

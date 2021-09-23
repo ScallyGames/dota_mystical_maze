@@ -1,9 +1,15 @@
 .player-info-panel
 {
+    width: 100%;
+    height: 100%;
+}
+
+.player-panel
+{
     vertical-align: top;
     margin-top: 10%;
     width: 100%;
-    height: 30%;
+    height: 24%;
 }
 
 .player-info-group
@@ -27,6 +33,12 @@
 {
     width: 100%;
     height: 50%;
+    wash-color: #ffffff;
+}
+
+.player-portrait.bonked
+{
+    wash-color: #cccccc;
 }
 
 .player-portrait-content
@@ -45,6 +57,7 @@
 .hero-image-crop
 {
     margin: 16px;
+    margin-right: 8px;
     height: 100%;
     width: height-percentage(100%);
     overflow: clip;
@@ -54,7 +67,6 @@
 {
     height: 100%;
     width: height-percentage(140%);
-    margin-top: 0%;
     background-color: black;
 }
 
@@ -96,8 +108,8 @@
 .player-name
 {
     color: white;
-    font-size: 24px;
-    margin: 12px 8px;
+    font-size: 22px;
+    margin-left: 8px;
     text-overflow: ellipsis;
 }
 
@@ -105,18 +117,32 @@
 {
     width: 100%;
     height: 100%;
-    flow-children: right;
+    flow-children: left;
 }
 
 .info
 {
-    width: 100%;
+    width: fill-parent-flow(1);
     height: 100%;
     margin: 16px 0px;
     flow-children: down;
 }
 
 .player-abilities DOTAAbilityImage
+{
+    margin: 8px 8px 0px 8px;
+    height: 100%;
+    width: height-percentage(100%);
+}
+
+.bonk-player
+{
+    height: 80%;
+    width: height-percentage(100%);
+    margin: 10% 0;
+}
+
+.bonk-player DOTAAbilityImage
 {
     margin: 8px 8px;
     height: 100%;
@@ -135,15 +161,71 @@
 
 #player-info-group-right .player-abilities
 {
-    flow-children: left;
+    flow-children: right;
 }
 
 #player-info-group-right .player-name
 {
     horizontal-align: right;
+    margin-left: 0px;
+    margin-right: 8px;
 }
 
 #player-info-group-right .hero-image
 {
     transform: scaleX(-1);
 }
+
+#player-info-group-right .hero-image-crop
+{
+    margin-right: 16px;
+    margin-left: 8px;
+}
+
+#bonk-stick
+{
+    height: 8%;
+    x: 90%;
+    y: 80%;
+    width: height-percentage(100%);
+}
+
+
+#bonk-stick.in-transition,
+#bonk-stick.player0.in-transition,
+#bonk-stick.player1.in-transition,
+#bonk-stick.player2.in-transition,
+#bonk-stick.player3.in-transition
+{
+    x: 50%;
+    y: 15%;
+    transform: rotateZ(-45deg);
+}
+
+#bonk-stick.player0
+{
+    x: 4%;
+    y: 11%;
+    transform: rotateZ(-90deg);
+}
+
+#bonk-stick.player1
+{
+    x: 3%;
+    y: 22%;
+    transform: rotateZ(-90deg);
+}
+
+#bonk-stick.player2
+{
+    x: 92%;
+    y: 11%;
+}
+
+#bonk-stick.player3
+{
+    x: 92%;
+    y: 23%;
+}
+
+

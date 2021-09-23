@@ -3,6 +3,29 @@
 {
 	"Version"		"1"
 
+    "do_something"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+        "BaseClass" "ability_lua"
+        "ScriptFile" "abilities/do_something"
+		"AbilityBehavior"		        "DOTA_ABILITY_BEHAVIOR_HIDDEN"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_BOTH"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO"
+		"AbilityUnitDamageType"		    "DAMAGE_TYPE_NONE"
+        "AbilityTextureName"			"do_something"
+        "MaxLevel"						"1"
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+        "AbilityCastRange"              "0"
+        "AbilityCastPoint"				"0.0"
+		// Time
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"0.0"
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"0"
+	}
     "refresh_timer"
 	{
 		// General

@@ -15,7 +15,9 @@
 interface CustomGameEventDeclarations {
     timer_tick: TimerTickEventData;
     timer_set_max_time: TimerMaxTimeEventData;
-    player_added_event: PlayerAddedEvent;
+    player_added_event: PlayerAddedEventData;
+    player_bonked: PlayerBonkedEventData;
+    activate_player_bonk: ActivatePlayerBonkEventData;
 }
 
 interface TimerTickEventData {
@@ -26,10 +28,21 @@ interface TimerMaxTimeEventData {
     max_time: number;
 }
 
-interface PlayerAddedEvent
+interface PlayerAddedEventData
 {
-    player_id: number;
+    player_id: PlayerID;
     player_name: string;
     hero_name: string;
     ability_names: string[];
 }
+
+interface PlayerBonkedEventData
+{
+    target_player_id: PlayerID;
+}
+
+interface ActivatePlayerBonkEventData
+{
+    target_player_id: PlayerID;
+}
+
