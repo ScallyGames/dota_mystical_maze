@@ -16,6 +16,7 @@ declare global {
 
 @reloadable
 export class GameMode {
+    public IsAllowingCommunication = true;
     public DidSteal = false;
     public RemainingTime = TimerDuration;
     public IsTimerRunning = false;
@@ -414,6 +415,29 @@ export class GameMode {
 
             return 0.1;
         });
+    }
+
+    public DisableCommunication()
+    {
+        if(!this.IsAllowingCommunication) return;
+
+        for (let i = 0 as PlayerID; i < 4; i++)
+        {
+            PlayerResource.GetPlayer(i)?.SetTeam(DOTA_TEAM_CUSTOM_MIN + i);
+        }
+        this.IsAllowingCommunication = false;
+        CustomGameEventManager.Send_ServerToAllClients('communication_deactivated', {} as never);
+    }
+
+    public EnableCommunication()
+    {
+        for (let i = 0 as PlayerID; i < 4; i++)
+        {
+            PlayerResource.GetPlayer(i)?.SetTeam(DotaTeam.GOODGUYS);
+        }
+        this.IsAllowingCommunication = true;
+
+        CustomGameEventManager.Send_ServerToAllClients('communication_activated', {} as never);
     }
 
     // Called on script_reload

@@ -61,6 +61,7 @@ export class teleport_to_portal extends BaseAbility
         }
 
         figure.SetAbsOrigin(target.GetAbsOrigin() + Vector(0, 0, 92) as Vector);
+        GameRules.Addon.DisableCommunication();
         GameRules.Addon.IsTimerRunning = true;
     }
 }

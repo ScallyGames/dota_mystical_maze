@@ -86,5 +86,6 @@ export class explore extends UnitTargetGridAligned
         if(tileInTargetSpot) return;
 
         gameMode.SpawnNextTile(spawnIndex.x, spawnIndex.y, direction);
+        GameRules.Addon.DisableCommunication();
     }
 }

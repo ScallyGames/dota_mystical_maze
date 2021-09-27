@@ -18,6 +18,8 @@ interface CustomGameEventDeclarations {
     player_added_event: PlayerAddedEventData;
     player_bonked: PlayerBonkedEventData;
     activate_player_bonk: ActivatePlayerBonkEventData;
+    communication_activated: CommunicationActivatedEventData;
+    communication_deactivated: CommunicationDeactivatedEventData;
 }
 
 interface TimerTickEventData {
@@ -44,5 +46,15 @@ interface PlayerBonkedEventData
 interface ActivatePlayerBonkEventData
 {
     target_player_id: PlayerID;
+}
+
+interface CommunicationActivatedEventData
+{
+
+}
+
+interface CommunicationDeactivatedEventData
+{
+
 }
 

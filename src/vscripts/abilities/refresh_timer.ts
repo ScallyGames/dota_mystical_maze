@@ -35,6 +35,27 @@ export class refresh_timer extends UnitTargetGridAligned
         let previousTime: number = GameRules.GetGameTime();
         let baseScale = hourGlass.GetAbsScale();
 
+
+        for(let i = 0; i < DOTA_MAX_PLAYERS; i++)
+        {
+            let player = PlayerResource.GetPlayer(i as PlayerID);
+            if(player)
+            {
+                let hero = player.GetAssignedHero();
+                hero.FindAbilityByName('teleport_to_portal')?.SetActivated(false);
+
+                hero.FindAbilityByName('move_north')?.SetActivated(false);
+                hero.FindAbilityByName('move_south')?.SetActivated(false);
+                hero.FindAbilityByName('move_west')?.SetActivated(false);
+                hero.FindAbilityByName('move_east')?.SetActivated(false);
+                hero.FindAbilityByName('traverse_stairs')?.SetActivated(false);
+                hero.FindAbilityByName('explore')?.SetActivated(false);
+                hero.FindAbilityByName('refresh_timer')?.SetActivated(false);
+            }
+        }
+
+        GameRules.Addon.EnableCommunication();
+
         Timers.CreateTimer(() =>
         {
             let currentTime = GameRules.GetGameTime();
@@ -56,6 +77,23 @@ export class refresh_timer extends UnitTargetGridAligned
                 hourGlass.Destroy();
                 Entities.FindByNameWithin(undefined, '*hourglass_particle', unitPosition, 512)?.Destroy();
                 GameRules.Addon.RemainingTime = TimerDuration;
+                for(let i = 0; i < DOTA_MAX_PLAYERS; i++)
+                {
+                    let player = PlayerResource.GetPlayer(i as PlayerID);
+                    if(player)
+                    {
+                        let hero = player.GetAssignedHero();
+                        hero.FindAbilityByName('teleport_to_portal')?.SetActivated(!GameRules.Addon.DidSteal);
+
+                        hero.FindAbilityByName('move_north')?.SetActivated(true);
+                        hero.FindAbilityByName('move_south')?.SetActivated(true);
+                        hero.FindAbilityByName('move_west')?.SetActivated(true);
+                        hero.FindAbilityByName('move_east')?.SetActivated(true);
+                        hero.FindAbilityByName('traverse_stairs')?.SetActivated(true);
+                        hero.FindAbilityByName('explore')?.SetActivated(true);
+                        hero.FindAbilityByName('refresh_timer')?.SetActivated(true);
+                    }
+                }
                 return;
             }
         });

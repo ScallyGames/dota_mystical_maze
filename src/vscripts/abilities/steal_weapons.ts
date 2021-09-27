@@ -18,6 +18,7 @@ export class steal_weapons extends BaseAbility
     OnSpellStart()
     {
         GameRules.Addon.DidSteal = true;
+        GameRules.Addon.DisableCommunication();
         for(let i = 0; i < DOTA_MAX_PLAYERS; i++)
         {
             let player = PlayerResource.GetPlayer(i as PlayerID);

@@ -97,5 +97,6 @@ export class traverse_stairs extends UnitTargetGridAligned
         targetUnit.MoveToPosition(endWorldPosition);
 
         GameRules.Addon.CurrentMovements.push(moveDescriptor);
+        GameRules.Addon.DisableCommunication();
     }
 }

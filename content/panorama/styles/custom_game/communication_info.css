@@ -1,0 +1,41 @@
+.communication-info-panel
+{
+    width: 100%;
+    height: 56%;
+    horizontal-align: center;
+    vertical-align: top;
+}
+
+#communication-info-text-panel
+{
+    width: 56%;
+    horizontal-align: center;
+    vertical-align: center;
+    background-image: url("s2r://panorama/images/hud/reborn/inventory_bg_bg_psd.vtex");
+    border-radius: 16px;
+    background-size: cover;
+    flow-children: down;
+    opacity: 1;
+    transition: opacity 1s ease-in-out 0.0s;
+}
+
+
+#communication-info-text-panel Label
+{
+    margin: 16px;
+    width: 100%;
+    color: gold;
+    font-size: 72px;
+    text-align: center;
+}
+
+#communication-info-text-panel #communication-info-detail-text
+{
+    margin-top: 0px;
+    font-size: 48px;
+}
+
+#communication-info-text-panel.hidden
+{
+    opacity: 0;
+}

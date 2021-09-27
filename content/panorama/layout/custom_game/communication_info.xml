@@ -1,0 +1,15 @@
+<root>
+	<styles>
+        <include src="file://{resources}/styles/custom_game/communication_info.css" />
+	</styles>
+	<scripts>
+        <include src="file://{resources}/scripts/custom_game/communication_info.js" />
+	</scripts>
+
+    <Panel hittest="false" class="communication-info-panel">
+        <Panel id="communication-info-text-panel">
+            <Label id="communication-info-text" text="COMMUNICATION IS NOW ALLOWED" />
+            <Label id="communication-info-detail-text" text="(until the next move is made)" />
+        </Panel>
+    </Panel>
+</root>
