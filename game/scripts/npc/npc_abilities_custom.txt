@@ -32,9 +32,7 @@
 		//-------------------------------------------------------------------------------------------------------------
         "BaseClass" "ability_lua"
         "ScriptFile" "abilities/refresh_timer"
-		"AbilityBehavior"		        "DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
-		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
-		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO"
+		"AbilityBehavior"		        "DOTA_ABILITY_BEHAVIOR_POINT"
 		"AbilityUnitDamageType"		    "DAMAGE_TYPE_NONE"
         "AbilityTextureName"			"refresh_timer"
         "MaxLevel"						"1"
@@ -76,11 +74,11 @@
 		//-------------------------------------------------------------------------------------------------------------
         "BaseClass" "ability_lua"
         "ScriptFile" "abilities/teleport_to_portal"
-		"AbilityBehavior"		        "DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
+        "AbilityBehavior"		        "DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_BUILDING"
 		"AbilityUnitTargetFlags"		"DOTA_UNIT_TARGET_FLAG_INVULNERABLE"
-		"AbilityUnitDamageType"		    "DAMAGE_TYPE_NONE"
+        "AbilityUnitDamageType"		    "DAMAGE_TYPE_NONE"
         "AbilityTextureName"			"teleport_to_portal"
         "MaxLevel"						"1"
 		// Casting
@@ -100,9 +98,7 @@
 		//-------------------------------------------------------------------------------------------------------------
         "BaseClass" "ability_lua"
         "ScriptFile" "abilities/explore"
-		"AbilityBehavior"		        "DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
-		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
-		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO"
+		"AbilityBehavior"		        "DOTA_ABILITY_BEHAVIOR_POINT"
 		"AbilityUnitDamageType"		    "DAMAGE_TYPE_NONE"
         "AbilityTextureName"			"explore"
         "MaxLevel"						"1"
@@ -123,9 +119,7 @@
 		//-------------------------------------------------------------------------------------------------------------
         "BaseClass" "ability_lua"
         "ScriptFile" "abilities/traverse_stairs"
-		"AbilityBehavior"		        "DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
-		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
-		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO"
+		"AbilityBehavior"		        "DOTA_ABILITY_BEHAVIOR_POINT"
 		"AbilityUnitDamageType"		    "DAMAGE_TYPE_NONE"
         "AbilityTextureName"			"traverse_stairs"
         "MaxLevel"						"1"

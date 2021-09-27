@@ -2,9 +2,10 @@ import { BaseAbility, registerAbility } from "../lib/dota_ts_adapter";
 import { AlignToGrid, equal, isBetweenInclusive, TileCoordToWorldCoord, WorldCoordToTileIndex } from "../utils";
 import { GridSize, TileSize } from "../constants";
 import { GameMode } from "../GameMode";
+import { UnitTargetGridAligned } from "./UnitTargetGridAligned";
 
 @registerAbility()
-export class traverse_stairs extends BaseAbility
+export class traverse_stairs extends UnitTargetGridAligned
 {
     override Spawn()
     {

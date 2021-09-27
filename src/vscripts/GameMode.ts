@@ -6,6 +6,7 @@ import { MapVectorKey } from "./data-structures/MapVectorKey";
 import { TileInstance } from "./TileInstance";
 import { modifier_unlock_ms_cap } from "./modifiers/modifier_unlock_ms_cap";
 import { Hero, HeroCharacters, HeroEnumToHeroString, HeroTargetWeapons, HeroWeapons, TileSize, TimerDuration } from "./constants";
+import { modifier_hero_selection_transformation } from "./modifiers/modifier_hero_selection_transformation";
 
 declare global {
     interface CDOTAGamerules {
@@ -362,6 +363,8 @@ export class GameMode {
                     x.SetAbsAngles(0, 270, 0);
                     x.SetUnitName(HeroEnumToHeroString[heroIndex]);
                     x.AddNewModifier(x, undefined, modifier_unlock_ms_cap.name, {});
+                    x.AddNewModifier(x, undefined, modifier_hero_selection_transformation.name, {});
+
                     this.CharacterEntities.push(x);
                     let weaponModel = Entities.FindByModel(undefined, HeroWeapons[heroIndex]) as CBaseModelEntity;
 

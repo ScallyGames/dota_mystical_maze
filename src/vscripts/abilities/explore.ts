@@ -2,9 +2,10 @@ import { BaseAbility, registerAbility } from "../lib/dota_ts_adapter";
 import { AlignToGrid, TileCoordToWorldCoord, WorldCoordToTileIndex } from "../utils";
 import { GridSize, HeroCharacters, TileSize } from "../constants";
 import { CardinalDirection } from "../TileDefinition";
+import { UnitTargetGridAligned } from "./UnitTargetGridAligned";
 
 @registerAbility()
-export class explore extends BaseAbility
+export class explore extends UnitTargetGridAligned
 {
     override Spawn()
     {

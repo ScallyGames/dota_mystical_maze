@@ -223,6 +223,7 @@
 	{
 		"override_hero"				"npc_dota_hero_juggernaut"
 
+        "ModelScale"		"1.400000"
         "MovementSpeed"		"2048"
 		"MovementTurnRate"		"100"
     }
@@ -230,6 +231,7 @@
     {
         "override_hero"             "npc_dota_hero_axe"
 
+        "ModelScale"		"1.400000"
         "MovementSpeed"		"2048"
 		"MovementTurnRate"		"100"
     }
@@ -237,6 +239,7 @@
     {
         "override_hero"             "npc_dota_hero_windrunner"
 
+        "ModelScale"		"1.600000"
         "MovementSpeed"		"2048"
 		"MovementTurnRate"		"100"
     }
@@ -244,6 +247,7 @@
     {
         "override_hero"             "npc_dota_hero_crystal_maiden"
 
+        "ModelScale"		"1.400000"
         "MovementSpeed"		"2048"
 		"MovementTurnRate"		"100"
     }

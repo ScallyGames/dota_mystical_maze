@@ -1,9 +1,10 @@
 import { TimerDuration } from "../constants";
 import { BaseAbility, registerAbility } from "../lib/dota_ts_adapter";
 import { easeInCubic, easeInOutCubic, easeInQuad, easeInQuint } from "../utils";
+import { UnitTargetGridAligned } from "./UnitTargetGridAligned";
 
 @registerAbility()
-export class refresh_timer extends BaseAbility
+export class refresh_timer extends UnitTargetGridAligned
 {
     override Spawn()
     {
