@@ -1,0 +1,52 @@
+<root>
+	<styles>
+        <include src="file://{resources}/styles/custom_game/how_to_play.css" />
+	</styles>
+	<scripts>
+        <include src="file://{resources}/scripts/custom_game/how_to_play.js" />
+	</scripts>
+
+    <Panel hittest="false" class="how-to-play-panel">
+        <Panel id="how-to-play-modal">
+            <Label id="header" class="how-to-play-text" text="HOW TO PLAY" />
+            <Panel id="how-to-play-text-panel">
+                <Label class="how-to-play-text" text="Our trusty heroes have lost their equipment on their last adventure. Help them getting it back in this old mage's maze." />
+                <Label class="how-to-play-text" text="But beware, he is suspicious of your activity so if you take too long he'll throw you out." />
+
+                <Panel>
+                    <DOTAAbilityImage abilityname="refresh_timer" />
+                    <Label class="how-to-play-text" text="If your time is about to run out, move any hero to an hourglass and use this ability to avert his gaze for a bit longer." />
+                </Panel>
+
+                <Panel>
+                    <DOTAAbilityImage abilityname="steal_weapons" />
+                    <Label class="how-to-play-text" text="Get all heroes to their respective weapons at the same time. Then use the ability to steal them and lead the heroes to the exit." />
+                </Panel>
+
+                <Label class="how-to-play-text" text="Each player can only move any unit in one specific direction. In addition to that, some players have an additional ability:" />
+                <Panel>
+                    <DOTAAbilityImage abilityname="explore" />
+                    <Label class="how-to-play-text" text="Most of the everchanging mystical maze is not unveiled yet. When one of the heroes is standing next to an unexplored tile with the exit matching their color, this player can use this ability on them to discover that next tile." />
+                </Panel>
+                <Panel>
+                    <DOTAAbilityImage abilityname="traverse_stairs" />
+                    <Label class="how-to-play-text" text="Some places are only reachable by traversing stairs. Use this ability to have a hero do that." />
+                </Panel>
+                <Panel>
+                    <DOTAAbilityImage abilityname="teleport_to_portal" />
+                    <Label class="how-to-play-text" text="Is a hero way out of position? Use this ability on any portal to recall the matching color unit. \nBe warned though, stealing the weapons triggers an alarm disabling all portals. You'll need to escape without using them." />
+                </Panel>
+
+                <Label class="how-to-play-text" text="One last thing: You'll need to cooperate but the maze won't allow you any communication. \nThe only exception is before the first move is made and after you've reset the timer, again, until the next move is made." />
+
+                <Panel>
+                    <DOTAAbilityImage abilityname="do_something" />
+                    <Label class="how-to-play-text" text="Luckily you've brought your bonk-stick though. If any of your mates is sleeping, click this icon next to their profile to tell them you think they should do something. No telling what though!" />
+                </Panel>
+            </Panel>
+            <Button id="close-button">
+                <Label text="Close" />
+            </Button>
+        </Panel>
+    </Panel>
+</root>
