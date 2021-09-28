@@ -12,5 +12,5 @@ export class TileInstance
     } = {};
     stairs?: StairDefinition[];
     escapeExit?: EscapeExitDefinition;
-    spawnGroupHandle: number = -1;
+    spawnGroupHandle: SpawnGroupHandle = -1 as SpawnGroupHandle;
 }
