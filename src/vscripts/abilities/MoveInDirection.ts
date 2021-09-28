@@ -24,6 +24,11 @@ export class MoveInDirection extends VectorTargetDirectionAligned
         const from = this.GetVectorPosition();
         const to = this.GetVector2Position();
 
+        if(math.abs(GetGroundHeight(from, undefined) - GetGroundHeight(to, undefined)) > 16)
+        {
+            return;
+        }
+
         let foundEntity = Entities.FindInSphere(undefined, this.GetVectorPosition(), 256)
 
         while(foundEntity)
