@@ -24,6 +24,8 @@ class PlayerPortrait {
 
         abilityNames.forEach(x =>
         {
+            if(x.indexOf('rubick') >= 0) return;
+
             $.CreatePanelWithProperties('DOTAAbilityImage', this.abilitiesPanel, x,
             {
                 abilityname: x

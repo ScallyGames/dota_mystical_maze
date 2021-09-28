@@ -3,6 +3,18 @@
 {
 	"Version"		"1"
 
+    "hidden_1"
+	{
+		"AbilityBehavior"		        "DOTA_ABILITY_BEHAVIOR_HIDDEN"
+    }
+    "hidden_2"
+	{
+		"AbilityBehavior"		        "DOTA_ABILITY_BEHAVIOR_HIDDEN"
+    }
+    "hidden_3"
+	{
+		"AbilityBehavior"		        "DOTA_ABILITY_BEHAVIOR_HIDDEN"
+    }
     "do_something"
 	{
 		// General
