@@ -34,7 +34,6 @@ export class MapVectorKey<ValueType> extends Map<number, ValueType>
         let hash = 23;
         hash += (hash * 37) + x.x;
         hash += (hash * 37) + x.y;
-        hash += (hash * 37) + x.z;
         return hash;
     }
 }
