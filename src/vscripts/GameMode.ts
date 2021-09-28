@@ -411,6 +411,12 @@ export class GameMode {
                 }
             }
             this.PreviousTime = currentTime;
+
+                let props = Entities.FindAllByName('*_weapon_anchor');
+                for(let i = 0; i < props.length; i++)
+                {
+                    props[i].SetAbsAngles(0, currentTime * 90, 0);
+                }
             }
 
             return 0.1;
